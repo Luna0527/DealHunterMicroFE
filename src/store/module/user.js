@@ -106,13 +106,13 @@ const auth = {
         },
         login({ commit }, user) {
             return new Promise((resolve, reject) => {
-                Api.post('/login', {
-                    email: user.email,
+                Api.post('user/login', {
+                    username: user.name,
                     password: user.password,
                 })
                     .then(response => {
-                        const token = response.data.token
-                        const user = response.data.user
+                        const token = response.data.accesstoken
+                        const user = response.data.username
 
                         localStorage.setItem('token', token)
                         localStorage.setItem('user', JSON.stringify(user))

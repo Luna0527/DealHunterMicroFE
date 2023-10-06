@@ -12,18 +12,15 @@
                         <hr />
                         <form @submit.prevent="login">
                             <div class="form-group">
-                                <label>Email Address</label>
+                                <label>User Name</label>
                                 <input
-                                    type="email"
-                                    v-model="user.email"
+                                    type="text"
+                                    v-model="user.name"
                                     class="form-control"
-                                    placeholder="Email Address"
+                                    placeholder="User Name"
                                 />
                             </div>
-                            <div
-                                v-if="validation.email"
-                                class="mt-2 alert alert-danger"
-                            >{{ validation.email[0] }}</div>
+
                             <div class="form-group mt-3">
                                 <label>Password</label>
                                 <input
@@ -37,30 +34,18 @@
                                 v-if="validation.password"
                                 class="mt-2 alert alert-danger"
                             >{{ validation.password[0] }}</div>
-                            <div class="form-group form-check mt-3 mb-3">
-                                <input
-                                    type="checkbox"
-                                    class="form-check-input"
-                                    id="exampleCheck1"
-                                    style="cursor: pointer"
-                                />
-                                <label
-                                    class="form-check-label"
-                                    for="exampleCheck1"
-                                    style="cursor: pointer"
-                                >Ingatkan Saya</label>
-                            </div>
+                            <hr />
                             <button type="submit" class="btn btn-primary w-100">Login</button>
                         </form>
                     </div>
                 </div>
                 <div class="register mt-3 text-center">
                     <p>
-                        Belum punya akun ?
+                        Don't have an account?
                         <router-link
                             :to="{ name: 'register' }"
                             class="text-decoration-none"
-                        >Daftar Sekarang !</router-link>
+                        >Register Now!</router-link>
                     </p>
                 </div>
             </div>
@@ -77,7 +62,7 @@ import Swal from 'sweetalert2'
 export default {
     setup() {
         const user = reactive({
-            email: '',
+            name: '',
             password: ''
         })
 
@@ -88,12 +73,12 @@ export default {
         const router = useRouter()
 
         const login = () => {
-            let email = user.email
+            let name = user.name
             let password = user.password
 
             Swal.fire({
                 title: 'Loading...',
-                text: 'Silahkan tunggu beberapa saat!',
+                text: 'Just one moment!',
                 icon: "info",
                 allowEscapeKey: false,
                 allowOutsideClick: false,
@@ -101,8 +86,8 @@ export default {
                     Swal.showLoading()
                 }
             })
-            store.dispatch('auth/login', {
-                email,
+            store.dispatch('user/login', {
+                name,
                 password
             })
                 .then(() => {
@@ -110,7 +95,7 @@ export default {
                     router.push({ name: 'dashboard' })
                     Swal.fire({
                         title: "Success",
-                        text: "Login berhasill.",
+                        text: "Logged in.",
                         icon: "success",
                         showConfirmButton: false,
                         timer: 1500

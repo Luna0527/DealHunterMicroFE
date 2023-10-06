@@ -10,12 +10,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Full Name</label>
+                                        <label>User Name</label>
                                         <input
                                             type="text"
                                             v-model="user.name"
                                             class="form-control"
-                                            placeholder="Full Name"
+                                            placeholder="User Name"
                                         />
                                     </div>
                                     <div
@@ -57,12 +57,12 @@
                                 </div>
                                 <div class="col-md-6 mt-3 mt-md-0">
                                     <div class="form-group">
-                                        <label>Konfirmasi Password</label>
+                                        <label>Confirm Password</label>
                                         <input
                                             type="password"
                                             v-model="user.password_confirmation"
                                             class="form-control"
-                                            placeholder="Konfirmasi Password"
+                                            placeholder="Confirm Password"
                                         />
                                     </div>
                                 </div>
@@ -73,11 +73,11 @@
                 </div>
                 <div class="register mt-3 text-center">
                     <p>
-                        Sudah punya akun ?
+                        Already have an account ?
                         <router-link
                             :to="{ name: 'login' }"
                             class="text-decoration-none"
-                        >Login Disini !</router-link>
+                        >Login Now!</router-link>
                     </p>
                 </div>
             </div>
@@ -114,7 +114,7 @@ export default {
 
             Swal.fire({
                 title: 'Loading...',
-                text: 'Silahkan tunggu beberapa saat!',
+                text: 'Just one moment!',
                 icon: "info",
                 allowEscapeKey: false,
                 allowOutsideClick: false,
@@ -133,7 +133,7 @@ export default {
                     router.push({ name: 'dashboard' })
                     Swal.fire({
                         title: "Success",
-                        text: "Register berhasil.",
+                        text: "Registered.",
                         icon: "success",
                         showConfirmButton: false,
                         timer: 1500

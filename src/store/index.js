@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 
-import auth from './module/auth'
+import user from './module/user'
 import order from './module/order'
 import category from './module/category'
 import slider from './module/slider'
@@ -9,7 +9,7 @@ import cart from './module/cart'
 
 export default createStore({
     modules: {
-        auth,
+        user,
         order,
         category,
         slider,
