@@ -1,6 +1,6 @@
 <template>
     <div class="card border-0 shadow rounded">
-        <div class="card-body" style="height: 800px;">
+        <div class="card-body" style="height: 100%;">
             <h5 class="fw-bold">
                 <i class="fa fa-shopping-bag"></i> Brand
             </h5>

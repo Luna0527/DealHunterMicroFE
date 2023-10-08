@@ -10,7 +10,9 @@
                             data-abc="true"
                         >
                             <span class="logo" style="font-size: 22px;">
-                                <i class="fa fa-apple-alt"></i> Deal Hunter
+                                <img src="../assets/logo.jpg"  width="40" height="40">
+                                <!-- <i class="fa fa-apple-alt"></i>  -->
+                                <b style="margin-left: 5px;">Deal Hunter</b>
                             </span>
                         </router-link>
                     </div>

@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="container-fluid mt-3">
-            <div class="row" style="height: 800px;">
-                <div class="col-md-3 mb-4" style="height: 800px;">
+        <div class="container-fluid">
+            <div class="row" style="height: 894px;">
+                <div class="col-md-3 mb-4" style="width: 300px; margin-top: 20px; opacity: 0.83;">
                     <Category />
                 </div>
-                <div class="col-md-9 mb-4" style="height: 800px;">
-                    <Slider />
-                </div>
+                <!-- <div class="col-md-9 mb-4" style="height: 800px;">
+                    <Homebg />
+                </div> -->
             </div>
         </div>
         <!-- <div class="container-fluid mb-5 mt-4">
@@ -84,9 +84,20 @@
     </div> 
 </template>
 
+<style scoped>
+.container-fluid {
+  width: 100%; /* 设置宽度，根据需要自行调整 */
+  height: 100%; /* 设置高度，根据需要自行调整 */
+  background-image: url('../../assets/homebg.jpg'); /* 设置背景图的路径 */
+  background-size: cover; /* 背景图的尺寸适应容器 */
+  background-repeat: no-repeat; /* 防止背景图重复显示 */
+}
+</style>
+
 <script>
 import Category from '../../components/Category'
-import Slider from '../../components/Slider'
+//import Slider from '../../components/Slider'
+// import Homebg from '../../components/Homebg'
 import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 // import { ContentLoader } from "vue-content-loader"
@@ -94,7 +105,8 @@ import { useStore } from 'vuex'
 export default {
     components: {
         Category,
-        Slider,
+        //Slider,
+        //Homebg
         // ContentLoader
     },
 
