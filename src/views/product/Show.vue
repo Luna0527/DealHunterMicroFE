@@ -59,24 +59,24 @@
                             class="discount mt-2 text-danger d-flex align-items-center"
                             v-if="product.discount > 0"
                         >
-                            <s>Rp. {{ moneyFormat(product.price) }}</s>
+                            <s>$ {{ moneyFormat(product.price) }}</s>
                             <span
                                 style="background-color: darkorange"
                                 class="badge badge-pill badge-success text-white ms-2"
                             >
-                                Diskon
+                                Discount
                                 {{ product.discount }} %
                             </span>
                         </div>
                         <div
                             class="price fw-bold mt-3"
                             style="color: #47b04b;font-size:18px"
-                        >Rp. {{ moneyFormat(calculateDiscount(product)) }}</div>
+                        >{{ moneyFormat(calculateDiscount(product)) }}</div>
                         <p class="content mt-3" v-html="product.content"></p>
                         <div class="weight">
-                            <label class="fw-bold me-5">Berat</label>
+                            <label class="fw-bold me-5">Description</label>
                             <label>
-                                <span class="fw-bold">{{ product.weight }}</span> gram
+                                <span class="fw-bold">{{ product.weight }}</span> 
                             </label>
                         </div>
                         <hr style="border-top: 1px solid rgb(0 0 0);border-radius:.5rem" />
@@ -84,7 +84,7 @@
                             @click.prevent="addToCart(product.id, calculateDiscount(product), product.weight)"
                             class="btn btn-primary btn-lg w-100"
                         >
-                            <i class="fa fa-shopping-cart"></i> Tambah Ke Keranjang
+                            <i class="fa fa-shopping-cart"></i> Add to list
                         </button>
                     </div>
                 </div>

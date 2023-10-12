@@ -1,26 +1,24 @@
 <template>
-    <div>
         <div class="container-fluid">
-            <div class="row" style="height: 894px;">
+            <!-- <div class="row" style="height: 894px;">
                 <div class="col-md-3 mb-4" style="width: 300px; margin-top: 20px; opacity: 0.83;">
-                    <Category />
-                </div>
+                </div> -->
                 <!-- <div class="col-md-9 mb-4" style="height: 800px;">
                     <Homebg />
                 </div> -->
-            </div>
+            <!-- </div> -->
         </div>
-        <!-- <div class="container-fluid mb-5 mt-4">
-            <div class="row"> -->
-                <!-- <div class="col-md-12">
+        <div class="container-fluid mb-5 mt-4">
+            <div class="row">
+                <div class="col-md-12">
                     <h4 class="fw-bold">
-                        <i class="fa fa-shopping-bag"></i> Produk Terbaru
+                        <i class="fa fa-shopping-bag"></i> Product
                     </h4>
                     <hr style="border-top: 3px solid rgb(154 155 156);border-radius:.5rem" />
-                </div> -->
-            <!-- </div>
-            <div class="row gy-2" v-if="isLoading"> -->
-                <!-- <div v-for="(number, index) in products" :key="index" class="col-12 col-md-3 mb-3">
+                </div>
+            </div>
+            <div class="row gy-2" v-if="isLoading">
+                <div v-for="(number, index) in products" :key="index" class="col-12 col-md-3 mb-3">
                     <div class="card border-0 shadow rounded-md">
                         <content-loader
                             viewBox="0 0 450 570"
@@ -36,16 +34,16 @@
                             <rect x="15" y="500" rx="5" ry="5" width="420" height="50" />
                         </content-loader>
                     </div>
-                </div> -->
-            <!-- </div>
+                </div>
+            </div>
             <div class="row gy-2" v-else>
                 <div
                     v-for="product in products"
                     :key="product.id"
                     class="col-md-4 col-lg-3 col-12 mb-3"
                 >
-                    <div class="card border-0 shadow rounded-md"> -->
-                        <!-- <div class="card-img">
+                    <div class="card border-0 shadow rounded-md"> 
+                        <div class="card-img">
                             <img
                                 v-lazy="{ src: product.image }"
                                 class="w-100"
@@ -76,15 +74,28 @@
                                 :to="{ name: 'detail_product', params: { slug: product.slug } }"
                                 class="btn btn-primary btn-md w-100 shadow-md"
                             >Lihat Produk</router-link>
-                        </div> -->
-                    <!-- </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>-->
+            <div>
+                <div>
+                <div v-for="product in exampleproducts" :key="product.id">
+                    <router-link :to="{ name: 'detail_product', params: { slug: product.slug } }">
+                    <div class="product">
+                        <img :src="product.image" :alt="product.name">
+                        <h2>{{ product.name }}</h2>
+                        <p>{{ product.description }}</p>
+                        <p>Price: {{ product.price }}</p>
+                     </div>
+                    </router-link>
+                </div>
+    </div>
+  </div>
     </div> 
 </template>
 
-<style scoped>
+<!-- <style scoped>
 .container-fluid {
   width: 100%; /* 设置宽度，根据需要自行调整 */
   height: 100%; /* 设置高度，根据需要自行调整 */
@@ -92,10 +103,10 @@
   background-size: cover; /* 背景图的尺寸适应容器 */
   background-repeat: no-repeat; /* 防止背景图重复显示 */
 }
-</style>
+</style> -->
 
 <script>
-import Category from '../../components/Category'
+// import Category from '../../components/Category'
 //import Slider from '../../components/Slider'
 import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
@@ -103,9 +114,30 @@ import { useStore } from 'vuex'
 
 export default {
     components: {
-        Category,
+        // Category,
         //Slider,
         // ContentLoader
+    },
+    data() {
+    return {
+      exampleproducts: [
+        {
+          slug: 1,
+          name: '商品1',
+          description: '这是商品1的详细描述。',
+          price: '$19.99',
+          image: 'product1.jpg'
+        },
+        // {
+        //   id: 2,
+        //   name: '商品2',
+        //   description: '这是商品2的详细描述。',
+        //   price: '$29.99',
+        //   image: 'product2.jpg'
+        // },
+        // 添加更多商品
+      ]
+    };
     },
 
     setup() {
