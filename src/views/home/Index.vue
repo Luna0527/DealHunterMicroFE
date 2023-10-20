@@ -2,9 +2,9 @@
     <div>
         <div class="container-fluid">
             <div class="row" style="height: 894px;">
-                <div class="col-md-3 mb-4" style="width: 300px; margin-top: 20px; opacity: 0.83;">
+                <!-- <div class="col-md-3 mb-4" style="width: 300px; margin-top: 20px; opacity: 0.83;">
                     <Category />
-                </div>
+                </div> -->
                 <!-- <div class="col-md-9 mb-4" style="height: 800px;">
                     <Homebg />
                 </div> -->
@@ -95,7 +95,7 @@
 </style>
 
 <script>
-import Category from '../../components/Category'
+// import Category from '../../components/Category'
 //import Slider from '../../components/Slider'
 import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
@@ -103,7 +103,7 @@ import { useStore } from 'vuex'
 
 export default {
     components: {
-        Category,
+        // Category,
         //Slider,
         // ContentLoader
     },

@@ -16,12 +16,12 @@
                             </span>
                         </router-link>
                     </div>
-                    <div class="col-md-5 d-none d-md-block">
+                    <div class="col-md-5 d-none d-md-block" >
                         <form class="search-wrap">
                             <div class="input-group w-100">
-                                <select id="options" style="border: 1px solid #d0d0d0">
-                                    <option value="option1">Product</option>
-                                    <option value="option2">Brand</option>
+                                <select id="options" style="border: 1px solid #d0d0d0" v-model="selectedOption">
+                                    <option value="product" selected>Product</option>
+                                    <option value="brand">Brand</option>
                                 </select>
                                 <input
                                     type="text"
@@ -30,19 +30,18 @@
                                     v-model="searchTerm"
                                     placeholder=""
                                 />
-                                <div class="input-group-append">
-                                    <!-- <button class="btn search-button" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button> -->
-                                    <router-link :to="{ name: 'DetailProduct' }">
-                                        <button class="btn search-button" type="submit">
-                                        <i class="fa fa-search"></i>
-                                        </button>
+                                 <div class="input-group-append">
+                                    <router-link :to="getRoutePath" :replace="false">
+                                        <template v-slot:default>
+                                            <button class="btn search-button">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </template>
                                     </router-link>
                                 </div>
                             </div>
                         </form>
-                        <div v-if="searchProducts.length > 0" class="autocomplete-products">
+                        <!-- <div v-if="searchProducts.length > 0" class="autocomplete-products"> -->
                         
                             <!-- <router-link
                                 v-for="product in searchProducts"
@@ -55,8 +54,8 @@
                                 {{ product.title }}
                             </router-link> -->
                         </div>
-                    </div>
-                    <div class="col-md-4 col-5">
+                    
+                    <div class="col-md-4 col-5" >
                         <div class="d-flex justify-content-end">
                             <div class="cart-header">
                                 <router-link
@@ -95,73 +94,103 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
-
+//import VueRouter from 'vue-router';
+// import { computed, onMounted, ref } from 'vue'
+// import { useStore } from 'vuex'
 export default {
-    setup() {
-        const store = useStore()
-
-        const searchTerm = ref('')
-
-        const isLoggedIn = computed(() => {
-            return store.getters['auth/isLoggedIn']
-        })//检查用户是否登陆
-
-        const cartCount = computed(() => {
-            return store.getters['cart/cartCount']
-        })//用于获取购物车中的物品数量
-
-        const cartTotal = computed(() => {
-            return store.getters['cart/cartTotal']
-        })//用于获取购物车中物品的总价
-
-        const products = computed(() => {
-            return store.state.product.products
-        })//用于获取产品列表
-
-        const searchProducts = computed(() => {
-            if (searchTerm.value === '') {
-                return []
-            }
-            let matches = 0
-            return products.value.filter(product => {
-                if (product.title.toLowerCase().includes(searchTerm.value.toLowerCase()) && matches < 10) {
-                    matches++
-                    return product
-                }
-            })
-        });//这是一个计算属性，用于根据用户输入的搜索词过滤产品列表并返回匹配的产品。它用户输入搜索词时动态计算。匹配的产品最多显示10个。
-
-        const selectProduct = () => {
-            searchTerm.value = ''
-        }// 这是一个函数，当用户选择某个产品后，会清空搜索词，以便用户继续浏览
-
-        onMounted(() => {
-            const token = store.state.auth.token
-
-            if (!token) {
-                return
-            }
-
-            store.dispatch('cart/cartCount')
-            store.dispatch('cart/cartTotal')
-
-            store.dispatch('product/getProducts')
-        })//在组件挂载后，执行一些操作。在这里，它首先检查用户是否已登录，然后根据登录状态分别触发了获取购物车数量、购物车总价和产品列表的操作。
-
-        return {
-            store,
-            searchTerm,
-            isLoggedIn,
-            cartCount,
-            cartTotal,
-            products,
-            searchProducts,
-            selectProduct
+  data() {
+    return {
+      selectedOption: 'product', // 默认选项
+      searchTerm: ''
+    };
+  },
+  computed: {
+    getRoutePath() {
+        //const router = new VueRouter(); 
+        // console.log("11111");console.log( this.searchTerm);
+      // 根据选项构建不同的路由路径
+      if (this.selectedOption === 'product') {
+        if(this.searchTerm){
+            console.log("u");
+            return { name: 'DetailProduct', params: { name: this.searchTerm } };
+        }else{
+            return { name: 'DetailProduct'};
         }
+      } else{
+        if(this.searchTerm){
+            return { name: 'DetailBrand', params: { name: this.searchTerm } };
+        }else{
+            return { name: 'DetailBrand'};
+        }
+      }
+      //return { name: 'DetailProduct' };
     }
-}
+  }
+};
+// }
+//     setup() {
+//         const store = useStore()
+
+//         const searchTerm = ref('')
+
+//         const isLoggedIn = computed(() => {
+//             return store.getters['auth/isLoggedIn']
+//         })//检查用户是否登陆
+
+//         const cartCount = computed(() => {
+//             return store.getters['cart/cartCount']
+//         })//用于获取购物车中的物品数量
+
+//         const cartTotal = computed(() => {
+//             return store.getters['cart/cartTotal']
+//         })//用于获取购物车中物品的总价
+
+//         const products = computed(() => {
+//             return store.state.product.products
+//         })//用于获取产品列表
+
+//         const searchProducts = computed(() => {
+//             if (searchTerm.value === '') {
+//                 return []
+//             }
+//             let matches = 0
+//             return products.value.filter(product => {
+//                 if (product.title.toLowerCase().includes(searchTerm.value.toLowerCase()) && matches < 10) {
+//                     matches++
+//                     return product
+//                 }
+//             })
+//         });//这是一个计算属性，用于根据用户输入的搜索词过滤产品列表并返回匹配的产品。它用户输入搜索词时动态计算。匹配的产品最多显示10个。
+
+//         const selectProduct = () => {
+//             searchTerm.value = ''
+//         }// 这是一个函数，当用户选择某个产品后，会清空搜索词，以便用户继续浏览
+
+//         onMounted(() => {
+//             const token = store.state.auth.token
+
+//             if (!token) {
+//                 return
+//             }
+
+//             store.dispatch('cart/cartCount')
+//             store.dispatch('cart/cartTotal')
+
+//             store.dispatch('product/getProducts')
+//         })//在组件挂载后，执行一些操作。在这里，它首先检查用户是否已登录，然后根据登录状态分别触发了获取购物车数量、购物车总价和产品列表的操作。
+
+//         return {
+//             store,
+//             searchTerm,
+//             isLoggedIn,
+//             cartCount,
+//             cartTotal,
+//             products,
+//             searchProducts,
+//             selectProduct
+//         }
+//     }
+// }
 </script>
 
 <style scoped>

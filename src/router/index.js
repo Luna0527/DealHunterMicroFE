@@ -81,10 +81,28 @@ const routes = [{
     }
 },
 {
+    path: '/Product/:name',
+    name: 'DetailProduct',
+    component: () =>
+        import( /* webpackChunkName: "DetailProduct" */ '../views/home/DetailProduct.vue'),
+},
+{
     path: '/Product',
     name: 'DetailProduct',
     component: () =>
         import( /* webpackChunkName: "DetailProduct" */ '../views/home/DetailProduct.vue'),
+},
+{
+    path: '/Brand/:name',
+    name: 'DetailBrand',
+    component: () =>
+        import( /* webpackChunkName: "DetailBrand" */ '../views/home/DetailBrand.vue'),
+},
+{
+    path: '/Brand',
+    name: 'DetailBrand',
+    component: () =>
+        import( /* webpackChunkName: "DetailBrand" */ '../views/home/DetailBrand.vue'),
 }
 ]
 
@@ -92,6 +110,7 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 })
+
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {

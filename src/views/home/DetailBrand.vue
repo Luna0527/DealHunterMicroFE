@@ -35,6 +35,19 @@
       </div>
     </div>
   </div>
+                <!-- <div v-for="product in exampleproducts" :key="product.id">
+                    <router-link :to="{ name: 'detail_product', params: { slug: product.slug } }">
+                    <div class="product">
+                        <img :src="product.image" :alt="product.name">
+                        <h2>{{ product.name }}</h2>
+                        <p>{{ product.description }}</p>
+                        <p>Price: {{ product.price }}</p>
+                     </div>
+                    </router-link>
+                </div> -->
+    <!-- </div>
+  </div>
+    </div>  -->
 </template>
 
 <!-- <style scoped>
@@ -50,6 +63,7 @@
 <script>
 // import Category from '../../components/Category'
 //import Slider from '../../components/Slider'
+// import product from '@/store/module/product';
 import axios from 'axios'
 // import { defineComponent} from 'vue'
 //import { useStore } from 'vuex'
@@ -63,11 +77,11 @@ export default {
     };
   },
   mounted() {
-    if(this.$route.params.name!=null){
+if(this.$route.params.name!=null){
         axios
-      .get('http://localhost:8080/api/products/productname', {
+      .get('http://localhost:8080/api/products/brandname', {
         params: {
-          productname:this.$route.params.name// 你的产品名称
+          brandname:this.$route.params.name// 你的产品名称
         },
       })
       .then((response) => {
