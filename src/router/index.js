@@ -66,10 +66,16 @@ const routes = [{
         import( /* webpackChunkName: "category" */ '../views/category/Index.vue')
 },
 {
-    path: '/category/:slug',
+    path: '/category/:id',
     name: 'detail_category',
     component: () =>
-        import( /* webpackChunkName: "detail_category" */ '../views/category/Show.vue')
+        import( /* webpackChunkName: "detail_category" */ '../views/product/Show.vue')
+},
+{
+    path: '/category',
+    name: 'detail_category',
+    component: () =>
+        import( /* webpackChunkName: "detail_category" */ '../views/product/Show.vue')
 },
 {
     path: '/cart',

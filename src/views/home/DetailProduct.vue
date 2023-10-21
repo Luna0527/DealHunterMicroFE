@@ -14,6 +14,9 @@
     </div>
     <div class="row gy-2" v-else>
       <div v-for="product in products" :key="product.id" class="col-md-4 col-lg-3 col-12 mb-3">
+      <router-link
+        :to="{ name: 'detail_category', params: { id: product.id} }"
+      >
         <!-- 循环渲染品牌数据 -->
         <div class="card border-0 shadow rounded-md">
           <!-- <div class="card-img">
@@ -26,15 +29,16 @@
           </div> -->
           <div class="card-body text-center">
             <p class="card-title" style="font-weight: bold;">{{ product.productname }}</p>
-            <p class="card-title" style="font-weight:200;">{{ product.brandname }}</p>
-            <p class="card-title" style="font-weight:200;">{{ product.currentPrice }}</p>
+            <p class="card-title" style="font-weight:200;font-size: 11px;color: gray;">{{ product.brandname }}</p>
+            <p class="card-title" style="font-weight:400;font-size: 14px;">Current Price ${{ product.currentPrice }}</p>
             <!-- 显示品牌名称 -->
             <!-- 其他品牌数据 -->
           </div>
         </div>
+      </router-link>
+    </div>
       </div>
     </div>
-  </div>
 </template>
 
 <!-- <style scoped>
@@ -147,3 +151,13 @@ export default {
 //     }
 // }
 </script>
+<style>
+.router-link-active {
+    text-decoration: none;
+    color: black;
+  }
+  a{
+    text-decoration: none;
+    color: black;
+  }
+  </style>
