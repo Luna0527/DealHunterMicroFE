@@ -2,17 +2,77 @@
           <div class="container-fluid mb-5 mt-4">
     <div class="row">
       <div class="col-md-12">
-        <h4 class="fw-bold">
+        <h4 class="fw-bold d-flex justify-content-between align-items-center">
+          <span class="flex-grow-1">
           <i class="fa fa-shopping-bag"></i> Product
+          </span>
+          <button class="btn btn-primary" @click="showForm = true">Create</button>
         </h4>
         <hr style="border-top: 3px solid rgb(154 155 156);border-radius:.5rem" />
       </div>
     </div>
-    <div class="row gy-2" v-if="isLoading">
+    <!-- <div class="row gy-2" v-if="isLoading"> -->
       <!-- 使用内容加载器或其他加载中的UI -->
       <!-- 省略内容 -->
-    </div>
-    <div class="row gy-2" v-else>
+    <!-- </div> -->
+
+    
+        <!-- Conditionally render the form based on showForm -->
+        <div v-if="showForm"  class="fullscreen-form">
+          <div class="card border-0 rounded shadow">
+            <div class="card-body">
+              <h5 class="card-title">Create Product</h5>
+              
+              <!-- Form starts here -->
+              <form @submit.prevent="submitForm">
+                <!-- Dropdown for Brand -->
+                <div class="mb-3">
+                  <label for="brand">Brand</label>
+                  <select v-model="selectedBrand" id="brand" class="form-control">
+                    <!-- Populate with brand options -->
+                    <option v-for="brand in brands" :key="brand.id" :value="brand.id">{{ brand.brandname }}</option>
+                  </select>
+                </div>
+
+                <!-- Other form fields -->
+                <div class="mb-3">
+                  <label for="productname">Product Name</label>
+                  <input type="text" id="productname" v-model="productName" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="storeAddress">Store Address</label>
+                  <input type="text" id="storeAddress" v-model="storeAddress" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="description">Description</label>
+                  <textarea id="description" v-model="description" class="form-control" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                  <label for="currentPrice">Current Price</label>
+                  <input type="number" id="currentPrice" v-model="currentPrice" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="picture">Upload Picture</label>
+                  <input type="file" id="picture" @change="handleFileChange" accept="image/*">
+                </div>
+
+                <!-- Close button -->
+                <button type="button" class="btn btn-secondary" @click="closeForm">Close</button>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+              <!-- Form ends here -->
+
+              </div>
+            </div>
+          </div>
+
+    <div v-if="!showForm" class="row gy-2">
       <div v-for="product in products" :key="product.id" class="col-md-4 col-lg-3 col-12 mb-3">
       <router-link
         :to="{ name: 'detail_category', params: { id: product.id} }"
@@ -64,6 +124,14 @@ export default {
     return {
       isLoading: true,
       products: [], 
+      showForm: false, // Initially set to false to hide the form
+      selectedBrand: null,
+      productName: '',
+      storeAddress: '',
+      description: '',
+      currentPrice: null,
+      picture: '',
+      brands: [],
     };
   },
   mounted() {
@@ -96,60 +164,78 @@ export default {
         this.isLoading = false; // 加载失败
       });
     }
+
+    //所有brandlist
+    axios
+      .get('http://localhost:8080/api/brands')
+      .then((response) => {
+        this.brands = response.data;
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching brand data: ', error);
+      });
+
   
   },
+
+  methods: {
+    closeForm() {
+      // Reset form fields and close the form
+      this.showForm = false;
+      this.selectedBrand = null;
+      this.productName = '';
+      this.storeAddress = '';
+      this.description = '';
+      this.currentPrice = null;
+      this.picture = '';
+
+      // 刷新页面
+    window.location.reload();
+    },
+
+    async submitForm() {
+
+    const selectedBrandId = this.selectedBrand;
+    
+    // 根据id找到对应的品牌对象
+    const selectedBrand = this.brands.find(brand => brand.id === selectedBrandId);
+
+      // 构造发送给后端的数据对象
+      const formData = {
+      brand_id: this.selectedBrand,
+      brandname: selectedBrand.brandname,  // 填充相应的数据，例如品牌名称
+      currentPrice: this.currentPrice,
+      description: this.description,
+      imageUrl: this.picture,
+      productname: this.productName,
+      storeAddress: this.storeAddress,
+    };
+    console.log(formData)
+
+    if(formData != null){
+    try {
+      // 发送 POST 请求
+      const response = await axios.post('http://localhost:8080/api/products', formData);
+
+      // 处理响应，例如检查是否成功保存数据
+      console.log('Data saved successfully:', response.data);
+
+      // 关闭表单
+      this.closeForm();
+    } catch (error) {
+      // 处理请求错误
+      console.error('Error saving data:', error);
+
+      // 这里可以添加适当的错误处理逻辑
+    }
+    }
+       },
+    },
+
+    
 };
-// export default {
-//     components: {
-//         // Category,
-//         //Slider,
-//         // ContentLoader
-//     },
-//     data() {
-//     return {
-//       exampleproducts: [
-//         {
-//           slug: 1,
-//           name: '商品1',
-//           description: '这是商品1的详细描述。',
-//           price: '$19.99',
-//           image: 'product1.jpg'
-//         },
-//         // {
-//         //   id: 2,
-//         //   name: '商品2',
-//         //   description: '这是商品2的详细描述。',
-//         //   price: '$29.99',
-//         //   image: 'product2.jpg'
-//         // },
-//         // 添加更多商品
-//       ]
-//     };
-//     },
 
-//     setup() {
-
-
-//         const store = useStore()
-
-//         onMounted(() => {
-//             store.dispatch('product/getProducts')
-//         })
-
-//         const products = computed(() => {
-//             return store.state.product.products
-//         })
-
-//         const isLoading = computed(() => {
-//             return store.state.product.isLoading
-//         })
-
-//         return {
-//             products,
-//             isLoading
-//         }
-//     }
-// }
 </script>
 <style>
 .router-link-active {
@@ -160,4 +246,16 @@ export default {
     text-decoration: none;
     color: black;
   }
+
+  .fullscreen-form {
+  position: fixed; /* 固定在视口中 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明的黑色背景蒙层 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
   </style>
