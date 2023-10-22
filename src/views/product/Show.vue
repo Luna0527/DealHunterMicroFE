@@ -50,7 +50,7 @@
                     </div> -->
                 <!-- </div> -->
             <!-- </div> -->
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
                         <label class="fw-bold" style="font-size: 20px;">{{ product.productname }}</label>
@@ -74,13 +74,13 @@
                         >{{  product.lowestPrice  }}</div> -->
                         <p class="content mt-3" v-html="product.content"></p>
                         <div class="weight">
-                            <label class="fw-bold me-5">Description</label>
+                            <label class="fw-bold me-5">Description:</label>
                             <label>
                                 <span class="fw-bold">{{ product.description }}</span> 
                             </label>
                         </div>
                         <div>
-                        <canvas ref="lineChart"></canvas>
+                        <canvas ref="lineChart"  width="400" height="400" ></canvas>
                         </div>
                         <hr style="border-top: 1px solid rgb(0 0 0);border-radius:.5rem" />
                         <button
@@ -128,6 +128,10 @@ export default {
             .then((priceHistoryResponse) => {
               this.priceHistory = priceHistoryResponse.data; // 将价格历史数据保存
               console.log(priceHistoryResponse.data);
+              console.log('Dates:', this.priceHistory.map(item => item.createDate));
+              this.formattedDates =  this.convertToYYYYMMDD(this.priceHistory.map(item => item.createDate))
+              console.log(this.formattedDates)
+              console.log('Prices:', this.priceHistory.map(item => item.price));
               this.isLoading = false; // 加载完成
               // 在数据加载完成后创建图表
               this.$nextTick(() => {
@@ -146,20 +150,31 @@ export default {
     }
   },
   methods: {
+    
+    convertToYYYYMMDD(dateStrings) {
+      return dateStrings.map(dateString => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      });
+    },
+
     createLineChart() {
       const ctx = this.$refs.lineChart.getContext('2d');
 
       this.lineChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: this.priceHistory.map(item => item.createDate), // 日期作为X轴标签
+          labels: this.formattedDates.map(item => item), // 日期作为X轴标签
           datasets: [
             {
               label: 'Price History',
               data: this.priceHistory.map(item => item.price), // 价格数据作为Y轴数据
               fill: false, // 不填充区域
               borderColor: 'rgb(75, 192, 192)', // 线的颜色
-              tension: 0.1, // 折线的弯曲度
+              tension: 0.4, // 折线的弯曲度
             },
           ],
         },
@@ -200,7 +215,6 @@ export default {
     },
   },
 };
-
 
 
 
