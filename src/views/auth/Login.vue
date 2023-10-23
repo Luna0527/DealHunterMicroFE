@@ -16,7 +16,7 @@
                                 <label>User Name</label>
                                 <input
                                     type="text"
-                                    v-model="userName"
+                                    v-model="username"
                                     class="form-control"
                                     placeholder="User Name"
                                 />
@@ -55,56 +55,122 @@
 </template>
 
 <script>
-import { ref, nextTick } from 'vue';
-//import { useCookies } from 'vue-cookie-next';
-import { createCookie } from 'vue-cookie-next';
-import { useRouter } from 'vue-router';
+// import { ref } from 'vue';
+// import { useCookies } from 'vue-cookie-next'; // Import the cookie library
+// import { useRouter } from 'vue-router';
+import axios from 'axios'; 
 
 export default {
-  name: 'Login',
-  setup() {
-    const userName = ref('');
-    const password = ref('');
-
-    const { set: setCookie } = createCookie();// 在需要设置cookie时使用 setCookie 函数
-    //const { set } = useCookies();
-    const router = useRouter(); // 初始化router
-
-    const login = async() => {
-      const fd = new FormData();
-      fd.append('userName', userName.value);
-      fd.append('passwd', password.value);
-
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+data(){
+  return {
+    username:'',
+    password:''
+  };
+},
+  methods:{
+    
+    // eslint-disable-next-line no-unused-vars
+    login() {
+      console.log("in");
+      // const router = useRouter();
+      const requestData = {
+        username: this.username,
+        password: this.password,
       };
-
-      // 使用router.push来导航
-      this.$axios.post('/login', fd, config).then(async(res) => {
-        alert(res.data.msg);
-        if (res.data.code === 200) {
-            setCookie('userName', fd.get('userName'));
-            await nextTick();
-          router.push('/'); // 使用router.push来导航
-        } else {
-          alert("invaild username or password");
-        }
-      }).catch((res) => {
-        alert(res.data.msg);
-      });
-    //   console.log(userName)
-    //   console.log(userName)
-    };
-
-    return {
-      userName,
-      password,
-      login,
-    };
-  },
+      console.log(requestData);
+  // 发起HTTP POST请求到后端的登录接口
+  axios.post('http://localhost:8080/api/user/login', requestData)
+  .then(response => {
+    console.log(response.data);
+    alert(response.data.message);
+    // router.push('/product'); 
+    // 在这里可以根据需要处理响应数据，例如保存JWT令牌，显示用户信息，根据角色决定权限等等
+  })
+  .catch(error => {
+    // 处理登录失败的情况，例如显示错误消息
+    console.error('登录失败：', error);
+    alert('Invalid username or password');
+  });
+       },
+      }
+    
 };
+
+    //   try {
+    //     const response = await this.$axios.post('http://localhost:8080/api/user/login', requestData);
+
+    //     if (response.data.code === 200) {
+    //       // set('userName', userName.value); // Set a user-specific cookie
+    //       console.log("login");
+    //       router.push('/'); // Redirect to the home page after successful login
+    //     } else {
+    //       alert('Invalid username or password');
+    //     }
+    //   } catch (error) {
+    //     alert('An error occurred during login');
+    //   }
+    // };
+
+    // return {
+    //   userName,
+    //   password,
+    //   login,
+    // };
+//   }；
+// }，
+// }；
+
+
+// import { ref, nextTick } from 'vue';
+// //import { useCookies } from 'vue-cookie-next';
+// import { createCookie } from 'vue-cookie-next';
+// import { useRouter } from 'vue-router';
+
+// export default {
+//   name: 'Login',
+//   setup() {
+//     const userName = ref('');
+//     const password = ref('');
+
+//     const { set: setCookie } = createCookie();// 在需要设置cookie时使用 setCookie 函数
+//     //const { set } = useCookies();
+//     const router = useRouter(); // 初始化router
+
+//     const login = async() => {
+//       const fd = new FormData();
+//       fd.append('userName', userName.value);
+//       fd.append('passwd', password.value);
+
+//       const config = {
+//         headers: {
+//           'Content-Type': 'multipart/form-data',
+//         },
+//       };
+
+//       // 使用router.push来导航
+//       this.$axios.post('/login', fd, config).then(async(res) => {
+//         alert(res.data.msg);
+//         if (res.data.code === 200) {
+//             setCookie('userName', fd.get('userName'));
+//             await nextTick();
+//           router.push('/'); // 使用router.push来导航
+//         } else {
+//           alert("invaild username or password");
+//         }
+//       }).catch((res) => {
+//         alert(res.data.msg);
+//       });
+//     //   console.log(userName)
+//     //   console.log(userName)
+//     };
+
+//     return {
+//       userName,
+//       password,
+//       login,
+//     };
+//   },
+// };
 // import { ref, reactive } from 'vue'
 // import { useStore } from 'vuex'
 // import { useRouter } from 'vue-router'
