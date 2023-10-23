@@ -79,14 +79,14 @@
       >
         <!-- 循环渲染品牌数据 -->
         <div class="card border-0 shadow rounded-md">
-          <!-- <div class="card-img">
-            显示品牌图片 
+          <div class="card-img">
+            <!-- 显示产品图片  -->
             <img
-              v-lazy="{ src: brand.image }"
+              v-lazy="{ src: product.imageUrl }"
               class="w-100"
-              style="height: 15em;object-fit:cover;border-top-left-radius: .25rem;border-top-right-radius: .25rem;"
+              style="height: 25em;object-fit:cover;border-top-left-radius: .25rem;border-top-right-radius: .25rem;"
             />
-          </div> -->
+          </div>
           <div class="card-body text-center">
             <p class="card-title" style="font-weight: bold;">{{ product.productname }}</p>
             <p class="card-title" style="font-weight:200;font-size: 11px;color: gray;">{{ product.brandname }}</p>
@@ -194,42 +194,61 @@ export default {
     window.location.reload();
     },
 
+    async handleFileChange(event) {
+    try {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await axios.post('http://localhost:8080/api/image/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      // 存储上传结果
+      this.resultFromUpload = response.data.result;
+
+      console.log('Upload successful:', this.resultFromUpload);
+    } catch (error) {
+      console.error('Upload failed:', error);
+    }
+  },
+
     async submitForm() {
 
-    const selectedBrandId = this.selectedBrand;
-    
-    // 根据id找到对应的品牌对象
-    const selectedBrand = this.brands.find(brand => brand.id === selectedBrandId);
+          const selectedBrandId = this.selectedBrand;
+          
+          // 根据id找到对应的品牌对象
+          const selectedBrand = this.brands.find(brand => brand.id === selectedBrandId);
 
-      // 构造发送给后端的数据对象
-      const formData = {
-      brand_id: this.selectedBrand,
-      brandname: selectedBrand.brandname,  // 填充相应的数据，例如品牌名称
-      currentPrice: this.currentPrice,
-      description: this.description,
-      imageUrl: this.picture,
-      productname: this.productName,
-      storeAddress: this.storeAddress,
-    };
-    console.log(formData)
+            // 构造发送给后端的数据对象
+            const formData = {
+            brand_id: this.selectedBrand,
+            brandname: selectedBrand.brandname,  // 填充相应的数据，例如品牌名称
+            currentPrice: this.currentPrice,
+            description: this.description,
+            imageUrl: this.resultFromUpload,
+            productname: this.productName,
+            storeAddress: this.storeAddress,
+          };
+          console.log(formData)
 
-    if(formData != null){
-    try {
-      // 发送 POST 请求
-      const response = await axios.post('http://localhost:8080/api/products', formData);
+          if(formData != null){
+          try {
+            // 发送 POST 请求
+            const response = await axios.post('http://localhost:8080/api/products', formData);
 
-      // 处理响应，例如检查是否成功保存数据
-      console.log('Data saved successfully:', response.data);
+            // 处理响应，例如检查是否成功保存数据
+            console.log('Data saved successfully:', response.data);
 
-      // 关闭表单
-      this.closeForm();
-    } catch (error) {
-      // 处理请求错误
-      console.error('Error saving data:', error);
-
-      // 这里可以添加适当的错误处理逻辑
-    }
-    }
+            // 关闭表单
+            this.closeForm();
+          } catch (error) {
+            // 处理请求错误
+            console.error('Error saving data:', error);
+          }
+          }
        },
     },
 

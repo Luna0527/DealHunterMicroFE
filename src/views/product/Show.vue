@@ -43,13 +43,13 @@
             </div>
         </div>
         <div class="row" v-else>
-            <!-- <div class="col-md-4"> -->
-                <!-- <div class="card border-0 rounded-3 shadow"> -->
-                    <!-- <div class="card-body p-2">
-                        <img :src="product.image" class="w-100 border-0 rounded" />
-                    </div> -->
-                <!-- </div> -->
-            <!-- </div> -->
+            <!-- <div class="col-md-4">
+                <div class="card border-0 rounded-3 shadow">
+                     <div class="card-body p-2"> 
+                        <img :src="product.imageUrl" class="w-100 border-0 rounded" />
+                    </div> 
+                </div>
+            </div>  -->
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
