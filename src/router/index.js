@@ -109,6 +109,15 @@ const routes = [{
     name: 'DetailBrand',
     component: () =>
         import( /* webpackChunkName: "DetailBrand" */ '../views/home/DetailBrand.vue'),
+},
+{
+    path: '/crepro',
+    name: 'crepro',
+    component: () =>
+        import( /* webpackChunkName: "DetailBrand" */ '../views/home/CreatePro.vue'),
+        // meta: {
+        //     requiresAuth: true
+        // }
 }
 ]
 

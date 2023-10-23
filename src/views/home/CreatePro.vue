@@ -1,22 +1,16 @@
 <template>
           <div class="container-fluid mb-5 mt-4">
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-12">
         <h4 class="fw-bold d-flex justify-content-between align-items-center">
           <span class="flex-grow-1">
           <i class="fa fa-shopping-bag"></i> Product
           </span>
-          <!-- <button class="btn btn-primary" @click="showForm = true">Create</button> -->
-          <router-link
-            :to="{ name: 'crepro' }"
-            class="btn btn-primary"
-             ><!-- v-if="!isLoggedIn" -->
-            Create
-             </router-link>
+          <button class="btn btn-primary" @click="showForm = true">Create</button>
         </h4>
         <hr style="border-top: 3px solid rgb(154 155 156);border-radius:.5rem" />
       </div>
-    </div>
+    </div> -->
     <!-- <div class="row gy-2" v-if="isLoading"> -->
       <!-- 使用内容加载器或其他加载中的UI -->
       <!-- 省略内容 -->
@@ -24,7 +18,7 @@
 
     
         <!-- Conditionally render the form based on showForm -->
-        <div v-if="showForm"  class="fullscreen-form">
+        <div class="fullscreen-form">
           <div class="card border-0 rounded shadow">
             <div class="card-body">
               <h5 class="card-title">Create Product</h5>
@@ -67,7 +61,7 @@
                 </div>
 
                 <!-- Close button -->
-                <button type="button" class="btn btn-secondary" @click="closeForm">Close</button>
+                <!-- <button type="button" class="btn btn-secondary" @click="closeForm">Close</button> -->
 
                 <!-- Submit button -->
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -77,33 +71,6 @@
               </div>
             </div>
           </div>
-
-    <div v-if="!showForm" class="row gy-2">
-      <div v-for="product in products" :key="product.id" class="col-md-4 col-lg-3 col-12 mb-3">
-      <router-link
-        :to="{ name: 'detail_category', params: { id: product.id} }"
-      >
-        <!-- 循环渲染品牌数据 -->
-        <div class="card border-0 shadow rounded-md">
-          <div class="card-img">
-            <!-- 显示产品图片  -->
-            <img
-              v-lazy="{ src: product.imageUrl }"
-              class="w-100"
-              style="height: 25em;object-fit:cover;border-top-left-radius: .25rem;border-top-right-radius: .25rem;"
-            />
-          </div>
-          <div class="card-body text-center">
-            <p class="card-title" style="font-weight: bold;">{{ product.productname }}</p>
-            <p class="card-title" style="font-weight:200;font-size: 11px;color: gray;">{{ product.brandname }}</p>
-            <p class="card-title" style="font-weight:400;font-size: 14px;">Current Price ${{ product.currentPrice }}</p>
-            <!-- 显示品牌名称 -->
-            <!-- 其他品牌数据 -->
-          </div>
-        </div>
-      </router-link>
-    </div>
-      </div>
     </div>
 </template>
 
@@ -140,50 +107,7 @@ export default {
       brands: [],
     };
   },
-  mounted() {
-    if(this.$route.params.name!=null){
-        axios
-      .get('http://localhost:8080/api/products/productname', {
-        params: {
-          productname:this.$route.params.name// 你的产品名称
-        },
-      })
-      .then((response) => {
-        this.products = response.data; // 将数据保存
-        console.log(response.data);
-        this.isLoading = false; // 加载完成
-      })
-      .catch((error) => {
-        console.error('Error fetching data: ', error);
-        this.isLoading = false; // 加载失败
-      });
-    }else{
-        axios
-      .get('http://localhost:8080/api/products')
-      .then((response) => {
-        this.products = response.data; // 将数据保存
-        console.log(response.data);
-        this.isLoading = false; // 加载完成
-      })
-      .catch((error) => {
-        console.error('Error fetching data: ', error);
-        this.isLoading = false; // 加载失败
-      });
-    }
 
-    //所有brandlist
-    axios
-      .get('http://localhost:8080/api/brands')
-      .then((response) => {
-        this.brands = response.data;
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching brand data: ', error);
-      });
-
-  
-  },
 
   methods: {
     closeForm() {
