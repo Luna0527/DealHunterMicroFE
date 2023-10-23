@@ -3,8 +3,8 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card border-0 shadow rounded">
-                    <div class="card-body">
-                        <h4>Register</h4>
+                    <div class="card-body" >
+                        <h4>Login</h4>
                         <hr />
                         <form >
                             <div class="row">
@@ -23,21 +23,7 @@
                                         class="mt-2 alert alert-danger"
                                     >{{ validation.name[0] }}</div> -->
                                 </div>
-                                <div class="col-md-6 mt-3 mt-md-0">
-                                    <div class="form-group">
-                                        <label>Email address</label>
-                                        <input
-                                            type="email"
-                                            v-model="useremail"
-                                            class="form-control"
-                                            placeholder="Email Address"
-                                        />
-                                    </div>
-                                    <!-- <div
-                                        v-if="validation.email"
-                                        class="mt-2 alert alert-danger"
-                                    >{{ validation.email[0] }}</div> -->
-                                </div>
+                    
                             </div>
                             <div class="row mt-3 mb-3">
                                 <div class="col-md-6">
@@ -67,17 +53,17 @@
                                     </div>
                                 </div> -->
                             </div>
-                            <button @click="register()" class="btn btn-primary w-100">Register</button>
+                            <input type="button" @click="login()" class="btn btn-primary w-100" value="Login">
                         </form>
                     </div>
                 </div>
                 <div class="register mt-3 text-center">
                     <p>
-                        Already have an account ?
+                        Don't have an account?
                         <router-link
-                            :to="{ name: 'login' }"
+                            :to="{ name: 'register' }"
                             class="text-decoration-none"
-                        >Login Now!</router-link>
+                        >Register Now!</router-link>
                     </p>
                 </div>
             </div>
@@ -93,36 +79,33 @@ export default {
 data(){
   return {
     username:'',
-    useremail:'',
     password:''
   };
 },
   methods:{
     
     // eslint-disable-next-line no-unused-vars
-    register() {
+    login() {
       console.log("in");
     //   const router = useRouter();
       const requestData = {
         username: this.username,
         password: this.password,
-        email:this.useremail
       };
       console.log(requestData);
   // 发起HTTP POST请求到后端的登录接口
-  axios.post('http://localhost:8080/api/user/signup', requestData)
+  axios.post('http://localhost:8080/api/user/login', requestData)
   .then(response => {
     // 处理后端的响应数据
     console.log(response.data);
-    alert(response.data.message);
-    if(response.data.message=="User registered!"){
-        this.$router.push('/login');
-    }
+    alert('Login success!');
+    this.$router.push('/');
+    // router.push('/product'); 
   })
   .catch(error => {
     // 处理登录失败的情况，例如显示错误消息
-    console.error('注册失败', error);
-    alert('User register failed.');
+    console.error('失败', error);
+    alert('User login failed.');
   });
        },
       }

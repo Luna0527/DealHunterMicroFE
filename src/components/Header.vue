@@ -72,18 +72,18 @@
                             <div class="account">
                                 <router-link
                                     :to="{ name: 'login' }"
-                                    v-if="!isLoggedIn"
+                                    
                                     class="btn search-button btn-md d-none d-md-block ms-3"
-                                >
+                               ><!-- v-if="!isLoggedIn" -->
                                     <i class="fa fa-user-circle"></i> Login
                                 </router-link>
-                                <router-link
+                                <!-- <router-link
                                     :to="{ name: 'dashboard' }"
                                     v-else
                                     class="btn search-button btn-md d-none d-md-block ms-3"
                                 >
                                     <i class="fa fa-tachometer-alt"></i> Dashboard
-                                </router-link>
+                                </router-link> -->
                             </div>
                         </div>
                     </div>

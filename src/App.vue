@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { onMounted } from 'vue'
+// import { onMounted } from 'vue'
 import { useStore } from 'vuex'
 import Header from './components/Header'
 // import Footer from './components/Footer'
@@ -24,9 +24,9 @@ export default {
   setup() {
     const store = useStore()
 
-    onMounted(() => {
-      store.dispatch('auth/getUser')
-    })
+    // onMounted(() => {
+    //   store.dispatch('auth/getUser')
+    // })
 
     return {
       store,

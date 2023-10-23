@@ -19,7 +19,7 @@
 
 <script>    
 import CustomerMenu from '../../components/CustomerMenu'
-import { computed, onMounted } from 'vue'
+import { computed} from 'vue'//, onMounted 
 import { useStore } from 'vuex'
 
 export default {
@@ -29,9 +29,9 @@ export default {
     setup() {            
         const store = useStore()
         
-        onMounted(() => {                
-            store.dispatch('auth/getUser')
-        })
+        // onMounted(() => {                
+        //     store.dispatch('auth/getUser')
+        // })
         
         const user = computed(() => {                
             return store.getters['auth/currentUser']
