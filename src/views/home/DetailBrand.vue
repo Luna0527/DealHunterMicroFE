@@ -19,14 +19,13 @@
       >
         <!-- 循环渲染品牌数据 -->
         <div class="card border-0 shadow rounded-md">
-          <!-- <div class="card-img">
-            显示品牌图片 
+          <div class="card-img">
             <img
-              v-lazy="{ src: brand.image }"
+              v-lazy="{ src: product.imageUrl }"
               class="w-100"
-              style="height: 15em;object-fit:cover;border-top-left-radius: .25rem;border-top-right-radius: .25rem;"
+              style="height: 25em;object-fit:cover;border-top-left-radius: .25rem;border-top-right-radius: .25rem;"
             />
-          </div> -->
+          </div>
           <div class="card-body text-center">
             <p class="card-title" style="font-weight: bold;">{{ product.productname }}</p>
             <p class="card-title" style="font-weight:200;font-size: 11px;color: gray;">{{ product.brandname }}</p>

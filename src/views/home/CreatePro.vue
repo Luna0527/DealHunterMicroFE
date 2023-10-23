@@ -59,12 +59,18 @@
                   <label for="picture">Upload Picture</label>
                   <input type="file" id="picture" @change="handleFileChange" accept="image/*">
                 </div>
-
-                <!-- Close button -->
-                <!-- <button type="button" class="btn btn-secondary" @click="closeForm">Close</button> -->
+                
+                 <div v-if="errorMessage" class="error-message" style="color: red;">
+                    {{ errorMessage }}
+                  </div>
 
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Submit</button>
+                
+                <!-- Close button -->
+                <button type="button" class="btn btn-secondary" @click="closeForm" >Close</button>
+
+                
               </form>
               <!-- Form ends here -->
 
@@ -105,7 +111,24 @@ export default {
       currentPrice: null,
       picture: '',
       brands: [],
+      errorMessage: ''
     };
+  },
+
+  mounted() {
+  
+    //所有brandlist
+    axios
+      .get('http://localhost:8080/api/brands')
+      .then((response) => {
+        this.brands = response.data;
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching brand data: ', error);
+      });
+
+  
   },
 
 
@@ -120,8 +143,8 @@ export default {
       this.currentPrice = null;
       this.picture = '';
 
-      // 刷新页面
-    window.location.reload();
+     // 跳转到 '/Product'
+      this.$router.push({ name: 'DetailProduct' });
     },
 
     async handleFileChange(event) {
@@ -140,14 +163,25 @@ export default {
       this.resultFromUpload = response.data.result;
 
       console.log('Upload successful:', this.resultFromUpload);
+      this.errorMessage = '';
     } catch (error) {
       console.error('Upload failed:', error);
+
+      // 判断具体的错误信息
+      if (error.response && error.response.status === 500 && error.response.data.error === 'File size exceeds limit') {
+        this.errorMessage = 'Please upload picture size below 1MB';
+      } else {
+        // 其他错误情况的处理
+        this.errorMessage = 'Please upload picture size below 1MB';
+      }
+
     }
   },
 
     async submitForm() {
 
           const selectedBrandId = this.selectedBrand;
+
           
           // 根据id找到对应的品牌对象
           const selectedBrand = this.brands.find(brand => brand.id === selectedBrandId);

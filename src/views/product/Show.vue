@@ -77,7 +77,13 @@
                             <label class="fw-bold me-5">Description:</label>
                             <label>
                                 <span class="fw-bold">{{ product.description }}</span> 
-                            </label>
+                            </label>                
+                        </div>
+                        <div class="weight">
+                            <label class="fw-bold me-5">Store Address:</label>
+                            <label>
+                                <span class="fw-bold">{{ product.storeAddress }}</span> 
+                            </label>                
                         </div>
                         <div>
                         <canvas ref="lineChart"  width="400" height="400" ></canvas>

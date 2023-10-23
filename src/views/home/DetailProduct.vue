@@ -11,7 +11,7 @@
             :to="{ name: 'crepro' }"
             class="btn btn-primary"
              ><!-- v-if="!isLoggedIn" -->
-            Create
+            Create Product
              </router-link>
         </h4>
         <hr style="border-top: 3px solid rgb(154 155 156);border-radius:.5rem" />
