@@ -44,63 +44,50 @@
         </div>-->
 
         <div class="row">
-            <div class="card-img d-flex justify-content-center align-items-center">
+    <div class="col-md-4"> <!-- 控制图片的宽度，这里使用col-md-4 -->
+        <div class="card-img d-flex justify-content-center align-items-center">
             <img
               v-lazy="{ src: product.imageUrl }"
-              class="w-50"
-              style="height: 25em;object-fit:cover;border-top-left-radius: .25rem;border-top-right-radius: .25rem;"
+              class="w-100"
+              style="height: 25em; object-fit: cover; border-top-left-radius: .25rem; border-top-right-radius: .25rem;"
             />
-          </div>
-            <div class="col-md-12">
-                <div class="card border-0 rounded shadow">
-                    <div class="card-body ">
-                      <div class="d-flex justify-content-between">
-                        <label class="fw-bold" style="font-size: 20px;">{{ product.productname }}</label>
-                        <button class="btn btn-primary" @click="showForm = true">Edit</button>
-                      </div>                 
-                        <!-- <hr style="border-top: 1px dashed  rgb(84, 83, 83);border-radius:.5rem" />                      -->
-                        <div
-                            class="discount mt-2 ms-1 d-flex align-items-center" style="color:rgb(56, 49, 49);font-weight: 700;"
-                        >
-                            Current Price：$ {{product.currentPrice}} 
-                        </div>
-                        <div>
-                            <span
-                                style="background-color: darkorange; font-size: 15px;"
-                                class="badge badge-pill badge-success text-white mt-1 ms-0" 
-                            >
-                                Lowest Price：$
-                                {{ product.lowestPrice }} 
-                            </span>
-                        </div>
-                        <p class="content mt-2" v-html="product.content"></p>
-                        <div class="weight">
-                            <label class="fw-bold me-3">Description:</label>
-                            <label>
-                                <span class="fw-bold">{{ product.description }}</span> 
-                            </label>                
-                        </div>
-                        <div class="weight">
-                            <label class="fw-bold me-5">Store Address:</label>
-                            <label>
-                                <span class="fw-bold">{{ product.storeAddress }}</span> 
-                            </label>                
-                        </div>
-                        <div>
-                        <canvas ref="lineChart"  width="400" height="400" ></canvas>
-                        </div>
-                        <hr style="border-top: 1px solid rgb(0 0 0);border-radius:.5rem" />
-                        <button
-                            @click.prevent="addToCart(product.id, calculateDiscount(product), product.weight)"
-                            class="btn btn-primary btn-lg w-100"
-                        >
-                            <i class="fa fa-shopping-cart"></i> Add to list
-                        </button>
-                    </div>
-                    
+        </div>
+    </div>
+    <div class="col-md-8"> <!-- 控制右侧内容的宽度，这里使用col-md-8 -->
+        <div class="card border-0 rounded shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <label class="fw-bold" style="font-size: 20px;">{{ product.productname }}</label>
+                    <button class="btn btn-primary" @click="showForm = true">Edit</button>
                 </div>
+                <!-- 其他内容... -->
+                <div class="weight">
+                    <label class="fw-bold me-3">Description:</label>
+                    <label>
+                        <span class="fw-bold">{{ product.description }}</span>
+                    </label>
+                </div>
+                <div class="weight">
+                    <label class="fw-bold me-5">Store Address:</label>
+                    <label>
+                        <span class="fw-bold">{{ product.storeAddress }}</span>
+                    </label>
+                </div>
+                <div>
+                    <canvas ref="lineChart" width="400" height="400"></canvas>
+                </div>
+                <hr style="border-top: 1px solid rgb(0 0 0);border-radius:.5rem" />
+                <button
+                    @click.prevent="addToCart(product.id, calculateDiscount(product), product.weight)"
+                    class="btn btn-primary btn-lg w-100"
+                >
+                    <i class="fa fa-shopping-cart"></i> Add to list
+                </button>
             </div>
         </div>
+    </div>
+</div>
+
         
         <!-- Conditionally render the form based on showForm -->
         <div v-if="showForm"  class="fullscreen-form" >
