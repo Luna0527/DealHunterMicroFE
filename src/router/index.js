@@ -82,9 +82,9 @@ const routes = [{
     name: 'cart',
     component: () =>
         import( /* webpackChunkName: "cart" */ '../views/cart/Index.vue'),
-    meta: {
-        requiresAuth: true
-    }
+    // meta: {
+    //     requiresAuth: true
+    // }
 },
 {
     path: '/Product/:name',
@@ -114,11 +114,39 @@ const routes = [{
     path: '/crepro',
     name: 'crepro',
     component: () =>
-        import( /* webpackChunkName: "DetailBrand" */ '../views/home/CreatePro.vue'),
+        import( /* webpackChunkName: "CrePro" */ '../views/home/CreatePro.vue'),
+        // meta: {
+        //     requiresAuth: true
+        // }
+},
+{
+    path: '/CreateBra',
+    name: 'CreateBra',
+    component: () =>
+        import( /* webpackChunkName: "CrePro" */ '../views/home/CreateBra.vue'),
+        // meta: {
+        //     requiresAuth: true
+        // }
+},
+{
+    path: '/CreateAdm',
+    name: 'CreateAdm',
+    component: () =>
+        import( /* webpackChunkName: "CrePro" */ '../views/auth/CreateAdm.vue'),
+        // meta: {
+        //     requiresAuth: true
+        // }
+},
+{
+    path: '/UpdBrand',
+    name: 'UpdBrand',
+    component: () =>
+        import( /* webpackChunkName: "UpdBra" */ '../views/home/UpdBrand.vue'),
         // meta: {
         //     requiresAuth: true
         // }
 }
+
 ]
 
 const router = createRouter({

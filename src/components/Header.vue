@@ -31,7 +31,7 @@
                                     placeholder=""
                                 />
                                  <div class="input-group-append">
-                                    <router-link :to="getRoutePath" :replace="false">
+                                    <router-link :to="getRoutePath" :replace="true">
                                         <template v-slot:default>
                                             <button class="btn search-button">
                                                 <i class="fa fa-search"></i>
@@ -61,12 +61,9 @@
                                 <router-link
                                     :to="{ name: 'cart' }"
                                     class="btn cart-button btn-md"
-                                    style="color: #ffffff;background-color: #ffb300;border-color: #ffffff;"
+                                    style="color: #ffffff;background-color: #ffb300;border-color: #ffffff;font-weight: 400;"
                                 >
-                                    <i class="fa fa-shopping-cart me-1"></i>
-                                    <span
-                                        v-if="cartCount >= 1"
-                                    >{{ cartCount }} | Rp. {{ moneyFormat(cartTotal) }}</span>
+                                    Personal Page
                                 </router-link>
                             </div>
                             <div class="account">
@@ -87,6 +84,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </section>
@@ -97,6 +95,8 @@
 //import VueRouter from 'vue-router';
 // import { computed, onMounted, ref } from 'vue'
 // import { useStore } from 'vuex'
+// 引入 jQuery
+
 export default {
   data() {
     return {
@@ -104,10 +104,11 @@ export default {
       searchTerm: ''
     };
   },
+
   computed: {
     getRoutePath() {
         //const router = new VueRouter(); 
-        // console.log("11111");console.log( this.searchTerm);
+    console.log("11111");console.log( this.searchTerm);
       // 根据选项构建不同的路由路径
       if (this.selectedOption === 'product') {
         if(this.searchTerm){
@@ -125,7 +126,8 @@ export default {
       }
       //return { name: 'DetailProduct' };
     }
-  }
+  },
+
 };
 // }
 //     setup() {

@@ -9,10 +9,13 @@
     },
     "dependencies": {
         "axios": "^0.21.0",
+        "bootstrap": "^5.3.2",
         "chartjs-adapter-date-fns": "^3.0.0",
         "cookie": "^0.5.0",
         "core-js": "^3.8.3",
+        "jquery": "^3.7.1",
         "js-cookie": "^3.0.5",
+        "popper.js": "^1.16.1",
         "vue": "^3.2.13",
         "vue-chartjs": "^5.2.0",
         "vue-content-loader": "^2.0.1",

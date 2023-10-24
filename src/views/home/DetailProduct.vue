@@ -9,10 +9,16 @@
           <!-- <button class="btn btn-primary" @click="showForm = true">Create</button> -->
           <router-link
             :to="{ name: 'crepro' }"
-            class="btn btn-primary"
+            class="btn btn-primary" 
              ><!-- v-if="!isLoggedIn" -->
             Create Product
              </router-link>
+             <router-link
+        :to="{ name: 'UpdBrand' }"
+      class="btn btn-primary" style="margin-left: 20px;"
+       ><!-- v-if="!isLoggedIn" -->
+      Update Brand
+       </router-link>
         </h4>
         <hr style="border-top: 3px solid rgb(154 155 156);border-radius:.5rem" />
       </div>
@@ -121,6 +127,7 @@
 // import Category from '../../components/Category'
 //import Slider from '../../components/Slider'
 import axios from 'axios'
+// import { initCustomFormatter } from 'vue';
 // import { defineComponent} from 'vue'
 //import { useStore } from 'vuex'
 //import { useStore } from 'vuex', onMounted 
@@ -141,7 +148,9 @@ export default {
     };
   },
   mounted() {
+    
     if(this.$route.params.name!=null){
+      window.location.reload();
         axios
       .get('http://localhost:8080/api/products/productname', {
         params: {
@@ -185,81 +194,91 @@ export default {
   
   },
 
+
   methods: {
-    closeForm() {
-      // Reset form fields and close the form
-      this.showForm = false;
-      this.selectedBrand = null;
-      this.productName = '';
-      this.storeAddress = '';
-      this.description = '';
-      this.currentPrice = null;
-      this.picture = '';
-
-      // 刷新页面
-    window.location.reload();
-    },
-
-    async handleFileChange(event) {
-    try {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const response = await axios.post('http://localhost:8080/api/image/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-
-      // 存储上传结果
-      this.resultFromUpload = response.data.result;
-
-      console.log('Upload successful:', this.resultFromUpload);
-    } catch (error) {
-      console.error('Upload failed:', error);
+    methods:{
+    reload(){
+        window.location.reload();
+        
     }
   },
+    init(){
+      console.log("ppppppp");
+    }
+//     closeForm() {
+//       // Reset form fields and close the form
+//       this.showForm = false;
+//       this.selectedBrand = null;
+//       this.productName = '';
+//       this.storeAddress = '';
+//       this.description = '';
+//       this.currentPrice = null;
+//       this.picture = '';
 
-    async submitForm() {
+//       // 刷新页面
+//     window.location.reload();
+//     },
 
-          const selectedBrandId = this.selectedBrand;
+//     async handleFileChange(event) {
+//     try {
+//       const file = event.target.files[0];
+//       const formData = new FormData();
+//       formData.append('file', file);
+
+//       const response = await axios.post('http://localhost:8080/api/image/upload', formData, {
+//         headers: {
+//           'Content-Type': 'multipart/form-data'
+//         }
+//       });
+
+//       // 存储上传结果
+//       this.resultFromUpload = response.data.result;
+
+//       console.log('Upload successful:', this.resultFromUpload);
+//     } catch (error) {
+//       console.error('Upload failed:', error);
+//     }
+//   },
+
+//     async submitForm() {
+
+//           const selectedBrandId = this.selectedBrand;
           
-          // 根据id找到对应的品牌对象
-          const selectedBrand = this.brands.find(brand => brand.id === selectedBrandId);
+//           // 根据id找到对应的品牌对象
+//           const selectedBrand = this.brands.find(brand => brand.id === selectedBrandId);
 
-            // 构造发送给后端的数据对象
-            const formData = {
-            brand_id: this.selectedBrand,
-            brandname: selectedBrand.brandname,  // 填充相应的数据，例如品牌名称
-            currentPrice: this.currentPrice,
-            description: this.description,
-            imageUrl: this.resultFromUpload,
-            productname: this.productName,
-            storeAddress: this.storeAddress,
-          };
-          console.log(formData)
+//             // 构造发送给后端的数据对象
+//             const formData = {
+//             brand_id: this.selectedBrand,
+//             brandname: selectedBrand.brandname,  // 填充相应的数据，例如品牌名称
+//             currentPrice: this.currentPrice,
+//             description: this.description,
+//             imageUrl: this.resultFromUpload,
+//             productname: this.productName,
+//             storeAddress: this.storeAddress,
+//           };
+//           console.log(formData)
 
-          if(formData != null){
-          try {
-            // 发送 POST 请求
-            const response = await axios.post('http://localhost:8080/api/products', formData);
+//           if(formData != null){
+//           try {
+//             // 发送 POST 请求
+//             const response = await axios.post('http://localhost:8080/api/products', formData);
 
-            // 处理响应，例如检查是否成功保存数据
-            console.log('Data saved successfully:', response.data);
+//             // 处理响应，例如检查是否成功保存数据
+//             console.log('Data saved successfully:', response.data);
 
-            // 关闭表单
-            this.closeForm();
-          } catch (error) {
-            // 处理请求错误
-            console.error('Error saving data:', error);
-          }
-          }
-       },
-    },
-
+//             // 关闭表单
+//             this.closeForm();
+//           } catch (error) {
+//             // 处理请求错误
+//             console.error('Error saving data:', error);
+//           }
+//           }
+//        },
+   },
+  };
     
-};
+// };
 
 </script>
 <style>
