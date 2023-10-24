@@ -45,6 +45,26 @@
 
         <div class="row">
     <div class="col-md-4"> <!-- 控制图片的宽度，这里使用col-md-4 -->
+      <div class="card border-0 rounded shadow">
+      <div class="card-body">
+          <div class="d-flex justify-content-between">
+              <label class="fw-bold" style="font-size: 20px;">{{ product.productname }}</label>
+              <button class="btn btn-primary" @click="showForm = true">Edit</button>
+          </div>
+          <div class="weight">
+              <label class="fw-bold me-5" style="font-size: 18px;">Address:</label>
+              <label>
+                  <span class="fw-bold">{{ product.storeAddress }}</span>
+              </label>
+          </div>
+          <div class="weight">
+                    <label class="fw-bold me-3" style="font-size: 18px;">Description:</label>
+                    <label>
+                        <span class="fw-bold">{{ product.description }}</span>
+                    </label>
+          </div>
+      </div>
+    </div>
         <div class="card-img d-flex justify-content-center align-items-center">
             <img
               v-lazy="{ src: product.imageUrl }"
@@ -53,15 +73,17 @@
             />
         </div>
     </div>
+
     <div class="col-md-8"> <!-- 控制右侧内容的宽度，这里使用col-md-8 -->
         <div class="card border-0 rounded shadow">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
-                    <label class="fw-bold" style="font-size: 20px;">{{ product.productname }}</label>
-                    <button class="btn btn-primary" @click="showForm = true">Edit</button>
+                    <label class="fw-bold" style="font-size: 20px;">Histroy price chart</label>
+                    <button class="btn btn-primary" @click="newpriceForm = true">I Got New Price</button>
                 </div>
                 <!-- 其他内容... -->
-                <div class="weight">
+
+                <!-- <div class="weight">
                     <label class="fw-bold me-3">Description:</label>
                     <label>
                         <span class="fw-bold">{{ product.description }}</span>
@@ -72,6 +94,20 @@
                     <label>
                         <span class="fw-bold">{{ product.storeAddress }}</span>
                     </label>
+                </div> -->
+                <div
+                            class="discount mt-2 ms-1 d-flex align-items-center" style="color:rgb(56, 49, 49);font-weight: 700;"
+                        >
+                            Current Price：$ {{product.currentPrice}} 
+                        </div>
+                        <div>
+                            <span
+                                style="background-color: darkorange; font-size: 15px;"
+                                class="badge badge-pill badge-success text-white mt-1 ms-0" 
+                            >
+                                Lowest Price：$
+                                {{ product.lowestPrice }} 
+                            </span>
                 </div>
                 <div>
                     <canvas ref="lineChart" width="400" height="400"></canvas>
@@ -87,9 +123,31 @@
         </div>
     </div>
 </div>
+        <!-- Submit new price form -->
+        <div v-if="newpriceForm"  class="fullscreen-form" >
+          <div class="card border-0 rounded shadow" style="width: 50%;">
+            <div class="card-body"  >
+              <h5 class="card-title">I Got New Price</h5>
+            
+              <!-- Form starts here -->
+              <form @submit.prevent="submitNewPrice" >
+              <div class="mb-3">
+                  <input type="number" id="newPrice" v-model="newPrice" class="form-control" step="0.01"  required>
+                </div>
 
-        
-        <!-- Conditionally render the form based on showForm -->
+                 <!-- Submit button -->
+               <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Submit</button>
+                
+                <!-- Close button -->
+                <button type="button" class="btn btn-secondary" @click="closenewPriceForm" >Close</button>
+              </form>
+              <!-- Form ends here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Product form -->
+        <!--Conditionally render the form based on showForm -->
         <div v-if="showForm"  class="fullscreen-form" >
           <div class="card border-0 rounded shadow" style="width: 50%;">
             <div class="card-body"  >
@@ -97,7 +155,6 @@
               
               <!-- Form starts here -->
               <form @submit.prevent="submitForm" >
-                <!-- Dropdown for Brand -->
                 <div class="mb-6" >
                   <label for="productname">Brand Name</label>
                   <input type="text" id="brandname" v-model="brandname" class="form-control" :readonly="true" maxlength="50" required>
@@ -149,6 +206,7 @@ export default {
       formattedDates:[],
       lineChart: null, // 保存图表实例
       showForm:false,
+      newpriceForm:false,
       productname:"",
       storeAddress:"",
       description:"",
@@ -203,6 +261,12 @@ export default {
     closeForm() {
       this.showForm = false;
     },
+
+    
+    closenewPriceForm() {
+      this.newpriceForm = false;
+    },
+
 
     convertToYYYYMMDD(dateStrings) {
       return dateStrings.map(dateString => {
@@ -264,6 +328,19 @@ export default {
         this.lineChart.data.labels = this.priceHistory.map(item => item.createDate);
         this.lineChart.data.datasets[0].data = this.priceHistory.map(item => item.price);
         this.lineChart.update();
+      }
+    },
+
+    async submitNewPrice() {
+      try {
+        const url = `http://localhost:8080/api/products/${this.product.id}/submit-price?newPrice=${this.newPrice}`;
+        const response = await axios.post(url);
+
+        // 处理响应，如果需要的话
+        console.log('Response:', response.data);
+        this.closenewPriceForm();
+        } catch (error) {
+        console.error('Error submitting new price:', error);
       }
     },
 
