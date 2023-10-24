@@ -1,6 +1,6 @@
 <template>
     <div class="container mt-5 mb-5">
-        <div class="row" v-if="isLoading">
+         <!--<div class="row" >
             <div class="col-12 d-none d-md-block">
                 <div class="card border-0 rounded shadow">
                     <content-loader
@@ -20,8 +20,8 @@
                         <rect x="146" y="109" rx="3" ry="3" width="267" height="18" />
                     </content-loader>
                 </div>
-            </div>
-            <div class="col-12 d-block d-sm-block d-md-none">
+            </div> -->
+            <!-- <div class="col-12 d-block d-sm-block d-md-none">
                 <div class="card border-0 rounded shadow">
                     <content-loader
                         viewBox="0 0 450 700"
@@ -40,41 +40,42 @@
                         <rect x="15" y="620" rx="5" ry="5" width="420" height="50" />
                     </content-loader>
                 </div>
-            </div>
-        </div>
-        <div class="row" v-else>
-            <!-- <div class="col-md-4">
-                <div class="card border-0 rounded-3 shadow">
-                     <div class="card-body p-2"> 
-                        <img :src="product.imageUrl" class="w-100 border-0 rounded" />
-                    </div> 
-                </div>
-            </div>  -->
+            </div> 
+        </div>-->
+
+        <div class="row">
+            <div class="card-img d-flex justify-content-center align-items-center">
+            <img
+              v-lazy="{ src: product.imageUrl }"
+              class="w-50"
+              style="height: 25em;object-fit:cover;border-top-left-radius: .25rem;border-top-right-radius: .25rem;"
+            />
+          </div>
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
-                    <div class="card-body">
+                    <div class="card-body ">
+                      <div class="d-flex justify-content-between">
                         <label class="fw-bold" style="font-size: 20px;">{{ product.productname }}</label>
-                        <hr style="border-top: 1px solid rgb(84, 83, 83);border-radius:.5rem" />
+                        <button class="btn btn-primary" @click="showForm = true">Edit</button>
+                      </div>                 
+                        <!-- <hr style="border-top: 1px dashed  rgb(84, 83, 83);border-radius:.5rem" />                      -->
                         <div
-                            class="discount mt-2 d-flex align-items-center" style="color:rgb(56, 49, 49);font-weight: 700;"
-                        
+                            class="discount mt-2 ms-1 d-flex align-items-center" style="color:rgb(56, 49, 49);font-weight: 700;"
                         >
-                            Current Price：$ {{product.currentPrice}}
+                            Current Price：$ {{product.currentPrice}} 
+                        </div>
+                        <div>
                             <span
                                 style="background-color: darkorange; font-size: 15px;"
-                                class="badge badge-pill badge-success text-white ms-2" 
+                                class="badge badge-pill badge-success text-white mt-1 ms-0" 
                             >
                                 Lowest Price：$
                                 {{ product.lowestPrice }} 
                             </span>
                         </div>
-                        <!-- <div
-                            class="price fw-bold mt-3"
-                            style="color: #47b04b;font-size:18px"
-                        >{{  product.lowestPrice  }}</div> -->
-                        <p class="content mt-3" v-html="product.content"></p>
+                        <p class="content mt-2" v-html="product.content"></p>
                         <div class="weight">
-                            <label class="fw-bold me-5">Description:</label>
+                            <label class="fw-bold me-3">Description:</label>
                             <label>
                                 <span class="fw-bold">{{ product.description }}</span> 
                             </label>                
@@ -100,6 +101,49 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Conditionally render the form based on showForm -->
+        <div v-if="showForm"  class="fullscreen-form" >
+          <div class="card border-0 rounded shadow" style="width: 50%;">
+            <div class="card-body"  >
+              <h5 class="card-title">Edit Product</h5>
+              
+              <!-- Form starts here -->
+              <form @submit.prevent="submitForm" >
+                <!-- Dropdown for Brand -->
+                <div class="mb-6" >
+                  <label for="productname">Brand Name</label>
+                  <input type="text" id="brandname" v-model="brandname" class="form-control" :readonly="true" maxlength="50" required>
+                </div>
+                <!-- Other form fields -->
+                <div class="mb-6">
+                  <label for="productname">Product Name</label>
+                  <input type="text" id="productname" v-model="productname" class="form-control" maxlength="50" required>
+                </div>
+
+                <div class="mb-6">
+                  <label for="storeAddress">Store Address</label>
+                  <input type="text" id="storeAddress" v-model="storeAddress" class="form-control" maxlength="200" required>
+                </div>
+
+                <div class="mb-6">
+                  <label for="description">Description</label>
+                  <textarea id="description" v-model="description" class="form-control" maxlength="255"  required></textarea>
+                </div>
+
+               <!-- Submit button -->
+               <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Submit</button>
+                
+                <!-- Close button -->
+                <button type="button" class="btn btn-secondary" @click="closeForm" >Close</button>
+
+              </form>
+              <!-- Form ends here -->
+
+              </div>
+            </div>
+          </div>                    
+
     </div>
 </template>
 
@@ -115,7 +159,15 @@ export default {
       isLoading: true,
       product: {},
       priceHistory: [], // 新增价格历史数据
+      formattedDates:[],
       lineChart: null, // 保存图表实例
+      showForm:false,
+      productname:"",
+      storeAddress:"",
+      description:"",
+      brandname:"",
+
+
     };
   },
   mounted() {
@@ -127,6 +179,10 @@ export default {
         .then((response) => {
           this.product = response.data; // 将产品详细信息保存
           console.log(response.data);
+          this.productname = this.product.productname;
+          this.storeAddress = this.product.storeAddress;
+          this.description = this.product.description;
+          this.brandname = this.product.brandname;
 
           // 获取价格历史数据
           axios
@@ -157,6 +213,10 @@ export default {
   },
   methods: {
     
+    closeForm() {
+      this.showForm = false;
+    },
+
     convertToYYYYMMDD(dateStrings) {
       return dateStrings.map(dateString => {
         const date = new Date(dateString);
@@ -219,6 +279,42 @@ export default {
         this.lineChart.update();
       }
     },
+
+    async submitForm() {
+
+
+        // 构造发送给后端的数据对象
+        const formData = {
+        brand_id: this.product.brand.id,
+        brandname: this.product.brandname,  // 填充相应的数据，例如品牌名称
+        currentPrice: this.product.currentPrice,
+        description: this.description,
+        imageUrl: this.product.imageUrl,
+        lowestPrice: this.product.lowestPrice,
+        product_id:this.product.id,
+        productname: this.productname,
+        storeAddress: this.storeAddress,
+      };
+      console.log('edit upload data',formData)
+
+      if(formData != null){
+      try {
+        // 发送 POST 请求
+        const response = await axios.put('http://localhost:8080/api/products', formData);
+
+        // 处理响应，例如检查是否成功保存数据
+        console.log('Data saved successfully:', response.data);
+
+        // 关闭表单
+        this.closeForm();
+      } catch (error) {
+        // 处理请求错误
+        console.error('Error saving data:', error);
+        }
+      }
+    },
+
+
   },
 };
 
@@ -278,3 +374,8 @@ export default {
 //     }
 // }
 </script>
+
+
+<style>
+
+</style>
