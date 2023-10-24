@@ -20,24 +20,25 @@
           <div class="col-md-12">
             <div class="card border-0 shadow rounded-md">
               <div class="card-body d-flex justify-content-between align-items-center">
-                <p class="card-title" style="font-weight: 400; color: gray; display: inline-block;">
+                <!-- 用flex调伸展比例 -->
+                <p class="card-title" style="flex: 0.5;font-weight: 400; color: gray; display: inline-block;">
                   <span>{{ brand.id }}</span>
                 </p>
-                <p class="card-title" style="font-weight: bold; display: inline-block;">
+                <p class="card-title" style="flex: 0.7;font-weight: bold; display: inline-block;">
                   <span v-if="!brand.editMode">{{ brand.brandname }}</span>
                   <input v-else v-model="brand.brandname" />
                 </p>
-                <p class="card-title" style="font-weight: 400; color: gray; display: inline-block;">
+                <p class="card-title" style="flex: 0.7;font-weight: 400; color: gray; display: inline-block;">
                   <span>{{ brand.createDate }}</span>
                 </p>
-                <p class="card-title" style="font-weight: 400; color: gray; display: inline-block;">
+                <p class="card-title" style="flex: 0.7;font-weight: 400; color: gray; display: inline-block;">
                   <span v-if="!brand.editMode">{{ brand.description }}</span>
                   <input v-else v-model="brand.description" />
                 </p>
-                <button class="btn search-button" @click="toggleEditMode(brand)" style="font-weight: 600;">
+                <button class="btn search-button" @click="toggleEditMode(brand)" style="flex: 1;font-weight: 600;">
                   {{ brand.editMode ? "Save" : "Modify" }}
                 </button>
-                <button class="btn search-button" @click="del(brand.id)" style="margin-left: 5px; font-weight: 600;">
+                <button class="btn search-button" @click="del(brand.id)" style=";margin-left: 5px; font-weight: 600;">
                   Delete
                 </button>
               </div>
@@ -62,15 +63,27 @@ export default {
   mounted() {
     this.fetchBrandData();
   },
+
   methods: {
+    convertToYYYYMMDD(dateStrings) {
+      const date = new Date(dateStrings);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    },
+
     fetchBrandData() {
       axios
         .get("http://localhost:8080/api/brands")
         .then((response) => {
           this.brands = response.data.map((brand) => ({
             ...brand,
+            createDate: this.convertToYYYYMMDD(brand.createDate),
             editMode: false, // 添加一个字段来表示编辑模式
           }));
+         
+          console.log("converted date:",this.formattedData);
           console.log(response.data);
         })
         .catch((error) => {
