@@ -83,6 +83,16 @@ import axios from 'axios'
 //import { useStore } from 'vuex'
 //import { useStore } from 'vuex', onMounted 
 // import { ContentLoader } from "vue-content-loader"
+// 假设你的 token 存储在变量中
+const token = localStorage.getItem('token');
+
+// 创建一个包含 token 的请求配置
+const config = {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+};
+
 export default {
   data() {
     return {
@@ -122,10 +132,10 @@ export default {
           };
           console.log(formData)
 
-          if(formData != null){
+          if(formData != null&& token!=null){
           try {
             // 发送 POST 请求
-            const response = await axios.post('http://localhost:8080/api/user/admin/create', formData);
+            const response = await axios.post('http://localhost:8080/api/user/admin/create', formData, config);
 
             // 处理响应，例如检查是否成功保存数据
             console.log('Data saved successfully:', response.data);
@@ -134,10 +144,12 @@ export default {
             this.closeForm();
           } catch (error) {
             // 处理请求错误
+            alert("Not authorized (Admin Only)");
+            this.closeForm();
             console.error('Error saving data:', error);
           }
-          }
-       },
+          }  
+        },
     },
 
     

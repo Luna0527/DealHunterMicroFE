@@ -98,8 +98,11 @@ data(){
   .then(response => {
     // 处理后端的响应数据
     console.log(response.data);
+    localStorage.setItem('token', response.data.accessToken);
+    console.log(localStorage.getItem('token'));
     alert('Login success!');
-    this.$router.push('/');
+    this.$router.push({ name: 'home1', params: { token: localStorage.getItem('token') } });
+
     // router.push('/product'); 
   })
   .catch(error => {

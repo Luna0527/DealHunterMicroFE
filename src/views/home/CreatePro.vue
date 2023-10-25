@@ -98,6 +98,11 @@ import axios from 'axios'
 //import { useStore } from 'vuex'
 //import { useStore } from 'vuex', onMounted 
 // import { ContentLoader } from "vue-content-loader"
+
+
+const token = localStorage.getItem('token');
+
+
 export default {
   data() {
     return {
@@ -155,6 +160,7 @@ export default {
 
       const response = await axios.post('http://localhost:8080/api/image/upload', formData, {
         headers: {
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
         }
       });
@@ -173,6 +179,11 @@ export default {
       } else {
         // 其他错误情况的处理
         this.errorMessage = 'Please upload picture size below 1MB';
+        //加一个用户没权限的报错
+
+
+
+
       }
 
     }

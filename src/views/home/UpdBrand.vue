@@ -53,6 +53,16 @@
 <script>
 import axios from "axios";
 
+
+const token = localStorage.getItem('token');
+
+// 创建一个包含 token 的请求配置
+const config = {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+};
+
 export default {
   data() {
     return {
@@ -102,7 +112,7 @@ export default {
       if(formData != null){
         console.log(formData);
             axios
-            .put('http://localhost:8080/api/brands', formData)
+            .put('http://localhost:8080/api/brands', formData, config)
             .then((response) => {
             // 处理响应，例如检查是否成功保存数据
             console.log('Data modofied successfully:', response.data);
@@ -117,7 +127,7 @@ export default {
     del(id) {
       console.log("Delete");
       axios
-        .delete('http://localhost:8080/api/brands/' + id)
+        .delete('http://localhost:8080/api/brands/' + id, config)
         .then((response) => {
           this.brands = response.data;
           console.log(response.data);

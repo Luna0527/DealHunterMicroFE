@@ -80,6 +80,15 @@ import axios from 'axios'
 //import { useStore } from 'vuex'
 //import { useStore } from 'vuex', onMounted 
 // import { ContentLoader } from "vue-content-loader"
+const token = localStorage.getItem('token');
+
+// 创建一个包含 token 的请求配置
+const config = {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+};
+
 export default {
   data() {
     return {
@@ -120,7 +129,7 @@ export default {
           if(formData != null){
           try {
             // 发送 POST 请求
-            const response = await axios.post('http://localhost:8080/api/brands', formData);
+            const response = await axios.post('http://localhost:8080/api/brands', formData, config);
 
             // 处理响应，例如检查是否成功保存数据
             console.log('Data saved successfully:', response.data);

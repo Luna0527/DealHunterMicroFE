@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="container-fluid">
-            <div class="row" style="height: 894px;">
+            <div class="row">
                 <!-- <div class="col-md-3 mb-4" style="width: 300px; margin-top: 20px; opacity: 0.83;">
                     <Category />
                 </div> -->
@@ -86,13 +86,16 @@
 
 <style scoped>
 .container-fluid {
-  width: 100%; /* 设置宽度，根据需要自行调整 */
-  height: 100%; /* 设置高度，根据需要自行调整 */
-  background-image: url('../../assets/homebg.jpg'); /* 设置背景图的路径 */
-  background-size: cover; /* 背景图的尺寸适应容器 */
-  background-repeat: no-repeat; /* 防止背景图重复显示 */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: url('../../assets/homebg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 </style>
+
 
 <script>
 // import Category from '../../components/Category'

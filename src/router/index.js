@@ -54,6 +54,12 @@ const routes = [{
         import( /* webpackChunkName: "home" */ '../views/home/Index.vue')
 },
 {
+    path: '/:token',
+    name: 'home1',
+    component: () =>
+        import( /* webpackChunkName: "home" */ '../views/home/Index.vue')
+},
+{
     path: '/product/:slug',
     name: 'detail_product',
     component: () =>

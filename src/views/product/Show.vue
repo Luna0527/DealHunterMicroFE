@@ -196,6 +196,15 @@ import axios from 'axios';
 import Chart from 'chart.js/auto'; // 导入 Chart.js 核心
 import 'chartjs-adapter-date-fns'; // 导入日期适配器（如果需要）
 
+// 假设你的 token 存储在变量中
+const token = localStorage.getItem('token');
+
+// 创建一个包含 token 的请求配置
+const config = {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+};
 
 export default {
   data() {
@@ -311,13 +320,13 @@ export default {
                 text: 'Date',
               },
             },
-            yAxis: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Price',
-              },
-            },
+            // yAxis: {
+            //   beginAtZero: true,
+            //   title: {
+            //     display: true,
+            //     text: 'Price',
+            //   },
+            // },
           },
         },
       });
@@ -334,11 +343,12 @@ export default {
     async submitNewPrice() {
       try {
         const url = `http://localhost:8080/api/products/${this.product.id}/submit-price?newPrice=${this.newPrice}`;
-        const response = await axios.post(url);
+        const response = await axios.post(url,null,config);
 
         // 处理响应，如果需要的话
         console.log('Response:', response.data);
         this.closenewPriceForm();
+        this.$router.push({ name: 'detail_category', params: { id: this.product.id } });
         } catch (error) {
         console.error('Error submitting new price:', error);
       }
@@ -364,13 +374,14 @@ export default {
       if(formData != null){
       try {
         // 发送 POST 请求
-        const response = await axios.put('http://localhost:8080/api/products', formData);
+        const response = await axios.put('http://localhost:8080/api/products', formData, config);
 
         // 处理响应，例如检查是否成功保存数据
         console.log('Data saved successfully:', response.data);
 
         // 关闭表单
         this.closeForm();
+
       } catch (error) {
         // 处理请求错误
         console.error('Error saving data:', error);

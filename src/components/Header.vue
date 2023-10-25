@@ -62,6 +62,7 @@
                                     :to="{ name: 'cart' }"
                                     class="btn cart-button btn-md"
                                     style="color: #ffffff;background-color: #ffb300;border-color: #ffffff;font-weight: 400;"
+                                    v-if="!isLoggedIn"
                                 >
                                     Personal Page
                                 </router-link>
@@ -71,7 +72,8 @@
                                     :to="{ name: 'login' }"
                                     
                                     class="btn search-button btn-md d-none d-md-block ms-3"
-                               ><!-- v-if="!isLoggedIn" -->
+                                    v-if="!isLoggedIn" 
+                                >
                                     <i class="fa fa-user-circle"></i> Login
                                 </router-link>
                                 <!-- <router-link
@@ -97,13 +99,31 @@
 // import { useStore } from 'vuex'
 // 引入 jQuery
 
+
 export default {
   data() {
     return {
       selectedOption: 'product', // 默认选项
-      searchTerm: ''
+      searchTerm: '',
+      isLoggedIn: false,
+    //   monitoredVariable:localStorage.getItem('token')
     };
   },
+
+ 
+
+//   watch: {
+//     monitoredVariable(token) {
+//       console.log('Variable changed to:',token);
+//       if(token != null) this.isLoggedIn = true;
+//     },
+//   },
+mounted() {
+    console.log("token"+this.$route.params.token);
+    if(this.$route.params.token!=null){
+        this.isLoggedIn=true;
+    }
+},
 
   computed: {
     getRoutePath() {

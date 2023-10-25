@@ -150,7 +150,7 @@ export default {
   mounted() {
     
     if(this.$route.params.name!=null){
-      window.location.reload();
+      // window.location.reload();
         axios
       .get('http://localhost:8080/api/products/productname', {
         params: {
