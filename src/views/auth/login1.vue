@@ -99,10 +99,17 @@ data(){
     // 处理后端的响应数据
     console.log(response.data);
     localStorage.setItem('token', response.data.accessToken);
-    console.log(localStorage.getItem('token'));
-    alert('Login success!');
-    this.$router.push({ name: 'home1', params: { token: localStorage.getItem('token') } });
-
+    localStorage.setItem('username', response.data.username);
+    localStorage.setItem('email', response.data.email);
+    localStorage.setItem('userId', response.data.userId);
+    localStorage.setItem('isAdmin', response.data.isAdmin);
+    // console.log(localStorage.getItem('token'));
+    // console.log(localStorage.getItem('email'));
+    console.log(localStorage.getItem('isAdmin'));
+    // alert('Login success!');
+    location.reload();
+    // this.$router.push({ name: 'home'});
+    
     // router.push('/product'); 
   })
   .catch(error => {

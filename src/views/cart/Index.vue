@@ -1,23 +1,33 @@
 <template>
-    <div class="container-fluid mb-5 mt-4">
-        <div class="row">
-            <div class="col-md-6">
+    <div class="container-fluid mb-5 mt-4" >
+        <!-- <div class="row"> -->
+            <div class="col-md-6" >
                 <div class="card border-0 shadow rounded">
-                    <div class="card-body">
+                    <div class="card-body" >
                         <h5>
+                            
                             <i class="fa fa-user-circle"></i> Personal Information
+                            
                             <router-link
-                            :to="{ name: '' }"
-                            class="btn btn-primary" style="margin-left: 120px;"
-                            ><!-- v-if="!isLoggedIn" -->
-                            Modify personal information
-                            </router-link>
-                            <router-link
+                            v-if="isAdmin==1"
                             :to="{ name: 'CreateAdm' }"
-                             class="btn btn-primary" style="margin-left: 20px;"
+                             class="btn btn-primary" style="margin-right: 20px;margin-left: 20px;" 
                             ><!-- v-if="!isLoggedIn" -->
                             Create new admin
                             </router-link>
+                            <router-link
+                            :to="{ name: 'ChangePass' }"
+                            class="btn btn-primary" style="margin-right: 20px;"
+                            ><!-- v-if="!isLoggedIn" -->
+                            Change password
+                            </router-link>
+                            <router-link
+                            :to="{ name: 'ChangeEm' }"
+                            class="btn btn-primary" 
+                            ><!-- v-if="!isLoggedIn" -->
+                            Change email
+                            </router-link>
+                            
                         </h5>
                         <hr style="border-top: 3px solid rgb(154 155 156);border-radius:.5rem" />
                         <div>
@@ -33,10 +43,10 @@
                                             <p
                                                 class="m-0"
                                                 id="subtotal"
-                                            >{{  }}</p>
+                                            >{{ this.username }}</p>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td class="set-td text-left" width="60%">
                                             <p class="m-0">Password</p>
                                         </td>
@@ -47,7 +57,7 @@
                                                 id="subtotal"
                                             >{{  }}</p>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         <td class="set-td text-left border-0">
                                             <p class="m-0">
@@ -59,8 +69,9 @@
                                             <p
                                                 class="m-0"
                                                 id="ongkir-cart"
-                                            >{{  }}</p>
+                                            >{{ this.email }}</p>
                                         </td>
+                                        
                                     </tr>
                                     
                                 </tbody>
@@ -70,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mt-3 mt-md-0">
+            <!-- <div class="col-md-6 mt-3 mt-md-0">
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
                         <h5>
@@ -85,8 +96,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div> -->
+        <!-- </div> -->
     </div>
 </template>
 
@@ -96,9 +107,36 @@
 // import { useStore } from 'vuex'
 // import { useRouter } from 'vue-router'
 // import Swal from 'sweetalert2'
+import axios from 'axios'
 
 export default {
-    setup() {
+    data() {
+        return{
+            username: localStorage.getItem('username'),
+            email: localStorage.getItem('email'),
+            isAdmin: localStorage.getItem('isAdmin')
+        };
+    },
+    mounted() {
+        console.log(this.isAdmin);
+        axios
+      .get('http://localhost:8080/api/products/productname', {
+        params: {
+          productname:this.$route.params.name// 你的产品名称
+        },
+      })
+      .then((response) => {
+        this.products = response.data; // 将数据保存
+        console.log(response.data);
+        this.isLoading = false; // 加载完成
+      })
+      .catch((error) => {
+        console.error('Error fetching data: ', error);
+        this.isLoading = false; // 加载失败
+      });
+    },
+    // setup() {
+        //console.log(this.email);
         // const store = useStore()
 
         // const router = useRouter()
@@ -307,6 +345,6 @@ export default {
     //         getCostService,
     //         checkout,
     //    }
-     }
+    //  }
 }
 </script>

@@ -21,22 +21,22 @@
         <div class="fullscreen-form">
           <div class="card border-0 rounded shadow">
             <div class="card-body">
-              <h5 class="card-title">Create Admin</h5>
+              <h5 class="card-title">CHange Email</h5>
               
               <!-- Form starts here -->
               <form @submit.prevent="submitForm">
               
 
                 <!-- Other form fields -->
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                   <label for="username">User Name</label>
                   <input type="text" id="username" v-model="username" class="form-control" required>
-                </div>
+                </div> -->
 
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                   <label for="password">Password</label>
                   <textarea id="password" v-model="password" class="form-control" required></textarea>
-                </div>
+                </div> -->
 
                 <div class="mb-3">
                   <label for="email">Email</label>
@@ -98,8 +98,6 @@ export default {
     return {
       isLoading: true,    
       showForm: false, // Initially set to false to hide the form     
-      username: '',
-      password: '',
       email: '',
       errorMessage: ''
     };
@@ -111,8 +109,6 @@ export default {
     closeForm() {
       // Reset form fields and close the form
       this.showForm = false;
-      this.username = '';
-      this.password = '';
       this.email = '';
 
      // 跳转到
@@ -125,26 +121,25 @@ export default {
 
             // 构造发送给后端的数据对象
             const formData = {
-
-            username: this.username,
-            password: this.password,
-            email:this.email,
+            email: this.email,
           };
           console.log(formData)
+          console.log(config)
 
           if(formData != null&& token!=null){
           try {
             // 发送 POST 请求
-            const response = await axios.post('http://localhost:8080/api/user/admin/create', formData, config);
+            const response = await axios.put('http://localhost:8080/api/user/modify/email', formData, config);
 
             // 处理响应，例如检查是否成功保存数据
             console.log('Data saved successfully:', response.data);
-
+            localStorage.setItem('email', this.email);
+            alert("Change sucessfully!");
             // 关闭表单
             this.closeForm();
           } catch (error) {
             // 处理请求错误
-            alert("Not authorized (Admin Only)!");
+            alert("Wrong!");
             this.closeForm();
             console.error('Error saving data:', error);
           }

@@ -78,8 +78,15 @@
         <div class="card border-0 rounded shadow">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
-                    <label class="fw-bold" style="font-size: 20px;">Histroy price chart</label>
-                    <button class="btn btn-primary" @click="newpriceForm = true">I Got New Price</button>
+                    <label class="fw-bold" style="font-size: 20px; ">Histroy price chart</label>
+                    <!-- <button class="btn btn-primary" @click="newpriceForm = true">I Got New Price</button> -->
+                    <button
+                    @click="isWatching ? delToWatch() : addToWatch()"
+                    class="btn btn-primary" style="background-color: white; width: 55px; "
+                >
+                  
+                <i :class="isWatching ? 'fa fa-heart fa-2x' : 'far fa-heart fa-2x'" style="color: darkorange;"></i>
+                </button>
                 </div>
                 <!-- 其他内容... -->
 
@@ -113,12 +120,13 @@
                     <canvas ref="lineChart" width="400" height="400"></canvas>
                 </div>
                 <hr style="border-top: 1px solid rgb(0 0 0);border-radius:.5rem" />
-                <button
+                <!-- <button
                     @click.prevent="addToCart(product.id, calculateDiscount(product), product.weight)"
                     class="btn btn-primary btn-lg w-100"
                 >
                     <i class="fa fa-shopping-cart"></i> Add to list
-                </button>
+                </button> -->
+                <button  class="btn btn-primary btn-lg w-100" @click="newpriceForm = true">I Got New Price</button>
             </div>
         </div>
     </div>
@@ -210,6 +218,7 @@ export default {
   data() {
     return {
       isLoading: true,
+      isWatching: false,
       product: {},
       priceHistory: [], // 新增价格历史数据
       formattedDates:[],
@@ -220,16 +229,21 @@ export default {
       storeAddress:"",
       description:"",
       brandname:"",
-
+      userId: localStorage.getItem('userId'),
 
     };
   },
   mounted() {
-    const productId = this.$route.params.id;
-    if (productId != null) {
+    if(this.$route.params.id!=null){
+      localStorage.setItem('proID', this.$route.params.id);
+      console.log(localStorage.getItem('proID'));
+    }
+
+    //const productId = this.$route.params.id;
+    if (localStorage.getItem('proID') != null) {
       // 使用 Axios 从后端接口获取产品详细信息
       axios
-        .get(`http://localhost:8080/api/products/${productId}`)
+        .get(`http://localhost:8080/api/products/${localStorage.getItem('proID')}`)
         .then((response) => {
           this.product = response.data; // 将产品详细信息保存
           console.log(response.data);
@@ -238,9 +252,10 @@ export default {
           this.description = this.product.description;
           this.brandname = this.product.brandname;
 
+
           // 获取价格历史数据
           axios
-            .get(`http://localhost:8080/api/priceHistory/price-history/product/${productId}`)
+            .get(`http://localhost:8080/api/priceHistory/price-history/product/${localStorage.getItem('proID')}`)
             .then((priceHistoryResponse) => {
               this.priceHistory = priceHistoryResponse.data; // 将价格历史数据保存
               console.log(priceHistoryResponse.data);
@@ -258,6 +273,22 @@ export default {
               console.error('Error fetching price history data: ', priceHistoryError);
               this.isLoading = false; // 加载失败
             });
+
+            if(localStorage.getItem('userId')!=null){
+            //判断关注
+            const url = `http://localhost:8080/api/products/${localStorage.getItem('proID')}/checkWatchers`;
+      
+           // 使用Vue Resource、Axios或其他HTTP请求库发送请求
+           // 这里使用Axios作为示例
+            axios.get(url,config)
+          .then(response => {
+            this.isWatching = response.data;
+          })
+          .catch(error => {
+          console.error("检查关注状态时出错：", error);
+          });
+            }
+           
         })
         .catch((error) => {
           console.error('Error fetching product data: ', error);
@@ -266,7 +297,34 @@ export default {
     }
   },
   methods: {
-    
+    addToWatch(){
+      //const productId = this.$route.params.id;
+      axios.post(`http://localhost:8080/api/products/${localStorage.getItem('proID')}/addWatchers`, null,config) 
+      .then(response => {
+    // 请求成功处理
+        console.log('添加用户关注成功', response.data);
+        location.reload();
+       })
+      .catch(error => {
+      // 请求失败处理
+       console.error('添加用户关注时出错：', error);
+      });
+    }, 
+
+    delToWatch(){
+      //const productId = this.$route.params.id;
+      axios.delete(`http://localhost:8080/api/products/${localStorage.getItem('proID')}/deleteWatchers`,config) 
+      .then(response => {
+    // 请求成功处理
+        console.log('删除用户关注成功', response.data);
+        location.reload();
+       })
+      .catch(error => {
+      // 请求失败处理
+       console.error('删除用户关注时出错：', error);
+      });
+    },
+
     closeForm() {
       this.showForm = false;
     },

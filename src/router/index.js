@@ -53,12 +53,12 @@ const routes = [{
     component: () =>
         import( /* webpackChunkName: "home" */ '../views/home/Index.vue')
 },
-{
-    path: '/:token',
-    name: 'home1',
-    component: () =>
-        import( /* webpackChunkName: "home" */ '../views/home/Index.vue')
-},
+// {
+//     path: '/:token',
+//     name: 'home1',
+//     component: () =>
+//         import( /* webpackChunkName: "home" */ '../views/home/Index.vue')
+// },
 {
     path: '/product/:slug',
     name: 'detail_product',
@@ -139,6 +139,24 @@ const routes = [{
     name: 'CreateAdm',
     component: () =>
         import( /* webpackChunkName: "CrePro" */ '../views/auth/CreateAdm.vue'),
+        // meta: {
+        //     requiresAuth: true
+        // }
+},
+{
+    path: '/ChangePass',
+    name: 'ChangePass',
+    component: () =>
+        import( /* webpackChunkName: "CrePro" */ '../views/auth/ChangePass.vue'),
+        // meta: {
+        //     requiresAuth: true
+        // }
+},
+{
+    path: '/ChangeEm',
+    name: 'ChangeEm',
+    component: () =>
+        import( /* webpackChunkName: "CrePro" */ '../views/auth/ChangeEm.vue'),
         // meta: {
         //     requiresAuth: true
         // }

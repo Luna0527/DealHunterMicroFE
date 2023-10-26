@@ -62,7 +62,7 @@
                                     :to="{ name: 'cart' }"
                                     class="btn cart-button btn-md"
                                     style="color: #ffffff;background-color: #ffb300;border-color: #ffffff;font-weight: 400;"
-                                    v-if="!isLoggedIn"
+                                    v-if="isLoggedIn!=null"
                                 >
                                     Personal Page
                                 </router-link>
@@ -72,10 +72,17 @@
                                     :to="{ name: 'login' }"
                                     
                                     class="btn search-button btn-md d-none d-md-block ms-3"
-                                    v-if="!isLoggedIn" 
+                                    v-if="isLoggedIn==null" 
                                 >
                                     <i class="fa fa-user-circle"></i> Login
                                 </router-link>
+                                <button
+                                    @click="logout()"
+                                    class="btn search-button btn-md d-none d-md-block ms-3"
+                                    v-if="isLoggedIn!=null" 
+                                >
+                                    <i class="fa fa-user-circle"></i> Logout
+                                </button>
                                 <!-- <router-link
                                     :to="{ name: 'dashboard' }"
                                     v-else
@@ -105,11 +112,24 @@ export default {
     return {
       selectedOption: 'product', // 默认选项
       searchTerm: '',
-      isLoggedIn: false,
+      isLoggedIn: localStorage.getItem('token'),
     //   monitoredVariable:localStorage.getItem('token')
     };
   },
 
+  methods:{
+    logout(){
+    // 清除令牌和其他用户信息
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('email');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('isAdmin');
+
+        this.$router.push({ name: 'home'});
+        location.reload();
+    },
+  },
  
 
 //   watch: {
@@ -118,12 +138,13 @@ export default {
 //       if(token != null) this.isLoggedIn = true;
 //     },
 //   },
-mounted() {
-    console.log("token"+this.$route.params.token);
-    if(this.$route.params.token!=null){
-        this.isLoggedIn=true;
-    }
-},
+// mounted() {
+    // console.log("token"+this.$route.params.token);
+    // if(this.$route.params.token!=null){
+    //     this.isLoggedIn=true;
+    // }
+    
+// },
 
   computed: {
     getRoutePath() {

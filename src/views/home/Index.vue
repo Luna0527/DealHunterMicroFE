@@ -100,8 +100,8 @@
 <script>
 // import Category from '../../components/Category'
 //import Slider from '../../components/Slider'
-import { computed, onMounted } from 'vue'
-import { useStore } from 'vuex'
+// import { computed, onMounted } from 'vue'
+// import { useStore } from 'vuex'
 // import { ContentLoader } from "vue-content-loader"
 
 export default {
@@ -109,27 +109,56 @@ export default {
         // Category,
         //Slider,
         // ContentLoader
+        
     },
+    data(){
+  return {
+    shouldRefresh:false
+  };
+},
 
-    setup() {
-        const store = useStore()
+// beforeRouteEnter(to, from, next) {
+//   next(vm => {
+//     if (vm) {
+//       // 访问组件实例中的数据
+//       if (vm.shouldRefresh) {
+//         // 执行刷新操作
+//         vm.refreshPage();
+//       } else {
+//         next();
+//       }
+//     }
+//   });
+// },
 
-        onMounted(() => {
-            store.dispatch('product/getProducts')
-        })
 
-        const products = computed(() => {
-            return store.state.product.products
-        })
 
-        const isLoading = computed(() => {
-            return store.state.product.isLoading
-        })
+  methods: {
+  refreshPage() {
+    // 执行刷新操作
+    location.reload();
+  }
+}
 
-        return {
-            products,
-            isLoading
-        }
-    }
+    // setup() {
+    //     const store = useStore()
+
+    //     onMounted(() => {
+    //         store.dispatch('product/getProducts')
+    //     })
+
+    //     const products = computed(() => {
+    //         return store.state.product.products
+    //     })
+
+    //     const isLoading = computed(() => {
+    //         return store.state.product.isLoading
+    //     })
+
+    //     return {
+    //         products,
+    //         isLoading
+    //     }
+    // }
 }
 </script>
