@@ -10,12 +10,14 @@
           <router-link
             :to="{ name: 'crepro' }"
             class="btn btn-primary" 
-             ><!-- v-if="!isLoggedIn" -->
+            v-if="isLogin!=null"
+             ><!--  -->
             Create Product
              </router-link>
              <router-link
         :to="{ name: 'UpdBrand' }"
       class="btn btn-primary" style="margin-left: 20px;"
+      v-if="isAdmin==1"
        ><!-- v-if="!isLoggedIn" -->
       Update Brand
        </router-link>
@@ -145,6 +147,8 @@ export default {
       currentPrice: null,
       picture: '',
       brands: [],
+      isAdmin: localStorage.getItem('isAdmin'),
+      isLogin:localStorage.getItem('username'),
     };
   },
   mounted() {

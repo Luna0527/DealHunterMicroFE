@@ -107,8 +107,9 @@ data(){
     // console.log(localStorage.getItem('email'));
     console.log(localStorage.getItem('isAdmin'));
     // alert('Login success!');
-    location.reload();
-    // this.$router.push({ name: 'home'});
+    location.reload(() => {
+        this.$router.push({ name: 'DetailProduct' });
+    });
     
     // router.push('/product'); 
   })

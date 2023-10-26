@@ -49,7 +49,9 @@
       <div class="card-body">
           <div class="d-flex justify-content-between">
               <label class="fw-bold" style="font-size: 20px;">{{ product.productname }}</label>
-              <button class="btn btn-primary" @click="showForm = true">Edit</button>
+              
+              <button class="btn btn-primary" v-if="isAdmin==1" @click="delPro" style="margin-left: 100px;">Delete</button>
+              <button class="btn btn-primary" v-if="isLogin!=null" @click="showForm = true">Edit</button>
           </div>
           <div class="weight">
               <label class="fw-bold me-5" style="font-size: 18px;">Address:</label>
@@ -82,7 +84,7 @@
                     <!-- <button class="btn btn-primary" @click="newpriceForm = true">I Got New Price</button> -->
                     <button
                     @click="isWatching ? delToWatch() : addToWatch()"
-                    class="btn btn-primary" style="background-color: white; width: 55px; "
+                    v-if="isLogin!=null" class="btn btn-primary" style="background-color: white; width: 55px; "
                 >
                   
                 <i :class="isWatching ? 'fa fa-heart fa-2x' : 'far fa-heart fa-2x'" style="color: darkorange;"></i>
@@ -126,7 +128,7 @@
                 >
                     <i class="fa fa-shopping-cart"></i> Add to list
                 </button> -->
-                <button  class="btn btn-primary btn-lg w-100" @click="newpriceForm = true">I Got New Price</button>
+                <button  class="btn btn-primary btn-lg w-100" v-if="isLogin!=null" @click="newpriceForm = true">I Got New Price</button>
             </div>
         </div>
     </div>
@@ -230,7 +232,8 @@ export default {
       description:"",
       brandname:"",
       userId: localStorage.getItem('userId'),
-
+      isAdmin: localStorage.getItem('isAdmin'),
+      isLogin:localStorage.getItem('username'),
     };
   },
   mounted() {
@@ -297,6 +300,19 @@ export default {
     }
   },
   methods: {
+    delPro(){
+  // 发起DELETE请求
+    axios.delete(`http://localhost:8080/api/products/${localStorage.getItem('proID')}`, config)
+  .then(response => {
+    // 请求成功处理
+    console.log('删除产品成功',response.data);
+    this.$router.push({ name: 'DetailProduct'});
+  })
+  .catch(error => {
+    // 请求失败处理
+    console.error('删除产品时出错：', error);
+  });
+    },
     addToWatch(){
       //const productId = this.$route.params.id;
       axios.post(`http://localhost:8080/api/products/${localStorage.getItem('proID')}/addWatchers`, null,config) 
@@ -407,6 +423,7 @@ export default {
         console.log('Response:', response.data);
         this.closenewPriceForm();
         this.$router.push({ name: 'detail_category', params: { id: this.product.id } });
+        location.reload();
         } catch (error) {
         console.error('Error submitting new price:', error);
       }

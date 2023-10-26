@@ -2,17 +2,86 @@
           <div class="container-fluid mb-5 mt-4">
     <div class="row">
       <div class="col-md-12">
-        <h4 class="fw-bold">
+        <h4 class="fw-bold d-flex justify-content-between align-items-center">
+          <span class="flex-grow-1">
           <i class="fa fa-shopping-bag"></i> Product
+          </span>
+          <!-- <button class="btn btn-primary" @click="showForm = true">Create</button> -->
+          <router-link
+            :to="{ name: 'crepro' }"
+            class="btn btn-primary" 
+            v-if="isLogin!=null"
+             ><!--  -->
+            Create Product
+             </router-link>
+             <router-link
+        :to="{ name: 'UpdBrand' }"
+      class="btn btn-primary" style="margin-left: 20px;"
+      v-if="isAdmin==1"
+       ><!-- v-if="!isLoggedIn" -->
+      Update Brand
+       </router-link>
         </h4>
         <hr style="border-top: 3px solid rgb(154 155 156);border-radius:.5rem" />
       </div>
     </div>
-    <div class="row gy-2" v-if="isLoading">
-      <!-- 使用内容加载器或其他加载中的UI -->
-      <!-- 省略内容 -->
-    </div>
-    <div class="row gy-2" v-else>
+
+    <!-- Conditionally render the form based on showForm -->
+    <div v-if="showForm"  class="fullscreen-form">
+          <div class="card border-0 rounded shadow">
+            <div class="card-body">
+              <h5 class="card-title">Create Product</h5>
+              
+              <!-- Form starts here -->
+              <form @submit.prevent="submitForm">
+                <!-- Dropdown for Brand -->
+                <div class="mb-3">
+                  <label for="brand">Brand</label>
+                  <select v-model="selectedBrand" id="brand" class="form-control">
+                    <!-- Populate with brand options -->
+                    <option v-for="brand in brands" :key="brand.id" :value="brand.id">{{ brand.brandname }}</option>
+                  </select>
+                </div>
+
+                <!-- Other form fields -->
+                <div class="mb-3">
+                  <label for="productname">Product Name</label>
+                  <input type="text" id="productname" v-model="productName" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="storeAddress">Store Address</label>
+                  <input type="text" id="storeAddress" v-model="storeAddress" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="description">Description</label>
+                  <textarea id="description" v-model="description" class="form-control" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                  <label for="currentPrice">Current Price</label>
+                  <input type="number" id="currentPrice" v-model="currentPrice" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="picture">Upload Picture</label>
+                  <input type="file" id="picture" @change="handleFileChange" accept="image/*">
+                </div>
+
+                <!-- Close button -->
+                <button type="button" class="btn btn-secondary" @click="closeForm">Close</button>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+              <!-- Form ends here -->
+
+              </div>
+            </div>
+          </div>
+
+    <div v-if="!showForm" class="row gy-2">
       <div v-for="product in products" :key="product.id" class="col-md-4 col-lg-3 col-12 mb-3">
         <router-link
         :to="{ name: 'detail_category', params: { id: product.id} }"
@@ -77,6 +146,16 @@ export default {
     return {
       isLoading: true,
       products: [], 
+      showForm: false, // Initially set to false to hide the form
+      selectedBrand: null,
+      productName: '',
+      storeAddress: '',
+      description: '',
+      currentPrice: null,
+      picture: '',
+      brands: [],
+      isAdmin: localStorage.getItem('isAdmin'),
+      isLogin:localStorage.getItem('username'),
     };
   },
   mounted() {
@@ -109,7 +188,29 @@ if(this.$route.params.name!=null){
         this.isLoading = false; // 加载失败
       });
     }
+   //所有brandlist
+   axios
+      .get('http://localhost:8080/api/brands')
+      .then((response) => {
+        this.brands = response.data;
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching brand data: ', error);
+      });
+
+  },
   
+  methods: {
+    methods:{
+    reload(){
+        window.location.reload();
+        
+    }
+  },
+    init(){
+      console.log("ppppppp");
+    }
   },
 };
 // export default {

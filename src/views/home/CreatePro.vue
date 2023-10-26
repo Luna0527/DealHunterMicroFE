@@ -102,6 +102,11 @@ import axios from 'axios'
 
 const token = localStorage.getItem('token');
 
+const config = {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+};
 
 export default {
   data() {
@@ -212,7 +217,7 @@ export default {
           if(formData != null){
           try {
             // 发送 POST 请求
-            const response = await axios.post('http://localhost:8080/api/products', formData);
+            const response = await axios.post('http://localhost:8080/api/products', formData ,config);
 
             // 处理响应，例如检查是否成功保存数据
             console.log('Data saved successfully:', response.data);
