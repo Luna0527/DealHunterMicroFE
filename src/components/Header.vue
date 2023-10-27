@@ -33,11 +33,17 @@
                                  <div class="input-group-append">
                                     <router-link :to="getRoutePath" :replace="true">
                                         <template v-slot:default>
-                                            <button class="btn search-button">
+                                            <button class="btn search-button"  >
                                                 <i class="fa fa-search"></i>
                                             </button>
                                         </template>
                                     </router-link>
+                                     
+                                            <!-- <button class="btn search-button" @click="jump()" >
+                                                <i class="fa fa-search"></i>
+                                            </button>  -->
+                                       
+
                                 </div>
                             </div>
                         </form>
@@ -126,9 +132,42 @@ export default {
         localStorage.removeItem('userId');
         localStorage.removeItem('isAdmin');
 
-        this.$router.push({ name: 'home'});
-        location.reload();
+        this.$router.push({ name: 'home' }).then(() => {
+        // 跳转完成后刷新页面
+            location.reload();
+        });
     },
+    jump(){
+          //const router = new VueRouter(); 
+          console.log( this.searchTerm);
+      // 根据选项构建不同的路由路径
+      if (this.selectedOption === 'product') {
+        if(this.searchTerm){
+            console.log(this.searchTerm);
+            // // 先执行路由跳转
+            // this.$router.push({ name: 'DetailProduct', params: { name: this.searchTerm } }).then(() => {
+            // // 跳转完成后刷新页面
+            // location.reload();
+            // });
+            // location.reload(() => {
+                this.$router.push({ name: 'loading', params: { name: this.searchTerm } });
+                // this.$router.go(0); // 强制刷新当前路由
+
+            // });
+
+        }else{
+            //location.reload(() => {
+                this.$router.push({ name: 'loading' });
+            //});
+        }
+      } else{
+        if(this.searchTerm){
+            return { name: 'DetailBrand', params: { name: this.searchTerm } };
+        }else{
+            return { name: 'DetailBrand'};
+        }
+      }
+    }
   },
  
 
@@ -149,22 +188,22 @@ export default {
   computed: {
     getRoutePath() {
         //const router = new VueRouter(); 
-    console.log("11111");console.log( this.searchTerm);
+        console.log( this.searchTerm);
       // 根据选项构建不同的路由路径
-      if (this.selectedOption === 'product') {
+    //   if (this.selectedOption === 'product') {
         if(this.searchTerm){
             console.log("u");
-            return { name: 'DetailProduct', params: { name: this.searchTerm } };
+            return { name: 'loading', params: { name: this.searchTerm, cate: this.selectedOption }};
         }else{
-            return { name: 'DetailProduct'};
+            return { name: 'loading', params: { cate: this.selectedOption }};
         }
-      } else{
-        if(this.searchTerm){
-            return { name: 'DetailBrand', params: { name: this.searchTerm } };
-        }else{
-            return { name: 'DetailBrand'};
-        }
-      }
+    //   } else{
+    //     if(this.searchTerm){
+    //         return { name: 'DetailBrand', params: { name: this.searchTerm }};
+    //     }else{
+    //         return { name: 'DetailBrand'};
+    //     }
+    //   }
       //return { name: 'DetailProduct' };
     }
   },

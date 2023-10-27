@@ -84,6 +84,18 @@ const routes = [{
         import( /* webpackChunkName: "detail_category" */ '../views/product/Show.vue')
 },
 {
+    path: '/loading/:name/:cate',
+    name: 'loading',
+    component: () =>
+        import( /* webpackChunkName: "detail_category" */ '../views/product/Loading.vue')
+},
+{
+    path: '/loading/:cate',
+    name: 'loading',
+    component: () =>
+        import( /* webpackChunkName: "detail_category" */ '../views/product/Loading.vue')
+},
+{
     path: '/cart',
     name: 'cart',
     component: () =>
@@ -98,6 +110,7 @@ const routes = [{
     component: () =>
         import( /* webpackChunkName: "DetailProduct" */ '../views/home/DetailProduct.vue'),
 },
+
 {
     path: '/Product',
     name: 'DetailProduct',

@@ -107,8 +107,9 @@ data(){
     // console.log(localStorage.getItem('email'));
     console.log(localStorage.getItem('isAdmin'));
     // alert('Login success!');
-    location.reload(() => {
-        this.$router.push({ name: 'DetailProduct' });
+    this.$router.push({ name: 'home' }).then(() => {
+    // 跳转完成后刷新页面
+        location.reload();
     });
     
     // router.push('/product'); 
@@ -116,7 +117,7 @@ data(){
   .catch(error => {
     // 处理登录失败的情况，例如显示错误消息
     console.error('失败', error);
-    alert('User login failed.');
+    alert('Invaild username or password!');
   });
        },
       }
