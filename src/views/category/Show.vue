@@ -90,3 +90,16 @@ export default {
     }
 }
 </script>
+<style>  
+.fullscreen-form {
+    position: fixed /* 固定在视口中 */;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明的黑色背景蒙层 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  </style>

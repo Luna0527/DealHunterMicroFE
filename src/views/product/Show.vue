@@ -10,7 +10,7 @@
               <label class="fw-bold" style="font-size: 20px;">{{ product.productname }}</label>
               
               <div class="d-flex">
-              <button class="btn btn-danger" v-if="isAdmin==1" @click="delPro" style="margin-left: 100px;">Delete</button>
+              <button class="btn btn-danger" v-if="isAdmin==1" @click="delPro" style="margin-left: 100px;margin-right: 10px;">Delete</button>
               <button class="btn btn-primary" v-if="isLogin!=null" @click="showForm = true">Edit</button>
               </div>
           </div>
@@ -48,7 +48,7 @@
                     v-if="isLogin!=null" class="btn btn-primary" style="background-color: white; width: 55px; "
                 >
                   
-                <i :class="isWatching ? 'fa fa-heart fa-2x' : 'far fa-heart fa-2x'" style="color: darkorange;"></i>
+                <i :class="isWatching ? 'fa fa-heart fa-2x' : 'far fa-heart fa-2x'" style="color: #dc3545;;"></i>
                 </button>
                 </div>
                 <!-- 其他内容... -->
@@ -78,7 +78,7 @@
                                 Lowest Price：$
                                 {{ product.lowestPrice }} 
                             </span>
-                            <button class="btn btn-primary" v-if="isAdmin==1" @click="showForm1 = true" style="margin-left: 55%;">Delete History Price</button>
+                            <button class="btn btn-primary" v-if="isAdmin==1" @click="showForm1 = true" style="margin-left: 50%;">Delete History Price</button>
                 </div>
                 <div>
                     <canvas ref="lineChart" width="400" height="400"></canvas>
