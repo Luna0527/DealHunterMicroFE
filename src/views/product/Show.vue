@@ -7,10 +7,10 @@
       <div class="card border-0 rounded shadow">
       <div class="card-body">
           <div class="d-flex justify-content-between">
-              <label class="fw-bold" style="font-size: 20px;">{{ product.productname }}</label>
+              <label class="fw-bold" style="font-size: 19px;">{{ product.productname }}</label>
               
               <div class="d-flex">
-              <button class="btn btn-danger" v-if="isAdmin==1" @click="delPro" style="margin-left: 100px;">Delete</button>
+              <button class="btn btn-danger" v-if="isAdmin==1" @click="delPro" style="margin-right: 10px;">Delete</button>
               <button class="btn btn-primary" v-if="isLogin!=null" @click="showForm = true">Edit</button>
               </div>
           </div>
@@ -70,7 +70,7 @@
                         >
                             Current Price：$ {{product.currentPrice}} 
                         </div>
-                        <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span
                                 style="background-color: darkorange; font-size: 15px;"
                                 class="badge badge-pill badge-success text-white mt-1 ms-0" 
@@ -78,7 +78,7 @@
                                 Lowest Price：$
                                 {{ product.lowestPrice }} 
                             </span>
-                            <button class="btn btn-primary" v-if="isAdmin==1" @click="showForm1 = true" style="margin-left: 55%;">Delete History Price</button>
+                            <button class="btn btn-danger" v-if="isAdmin==1" @click="showForm1 = true">Delete History Price</button>
                 </div>
                 <div>
                     <canvas ref="lineChart" width="400" height="400"></canvas>
@@ -163,43 +163,24 @@
           <!-- Delete History form -->
         <!--Conditionally render the form based on showForm -->
         <div v-if="showForm1"  class="fullscreen-form" >
-          <div class="card border-0 rounded shadow" style="width: 50%;">
+          <div class="card border-0 rounded shadow" style="width: 30%;">
             <div class="card-body"  >
               <h5 class="card-title">Delete History Price</h5>
               
-              <!-- Form starts here -->
-              <!-- <form @submit.prevent="submitForm" >
-                <div class="mb-6" >
-                  <label for="productname">Brand Name</label>
-                  <input type="text" id="brandname" v-model="brandname" class="form-control" :readonly="true" maxlength="50" required>
+              <ul>
+              <li v-for="price in priceHistory" :key="price.id">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span>{{ convertToYYYYMMDD([price.createDate])[0] }}</span>
+                  <span>$ {{ price.price }}</span>
+                  <button class="btn search-button" @click="del(price.id)" style="margin-right: 5px; font-weight: 600;">
+                    Delete
+                  </button>
                 </div>
-                Other form fields
-                <div class="mb-6">
-                  <label for="productname">Product Name</label>
-                  <input type="text" id="productname" v-model="productname" class="form-control" maxlength="50" required>
-                </div>
-
-                <div class="mb-6">
-                  <label for="storeAddress">Store Address</label>
-                  <input type="text" id="storeAddress" v-model="storeAddress" class="form-control" maxlength="200" required>
-                </div>
-
-                <div class="mb-6">
-                  <label for="description">Description</label>
-                  <textarea id="description" v-model="description" class="form-control" maxlength="255"  required></textarea>
-                </div> -->
-                <ul>
-                <li v-for="price in priceHistory" :key="price.id">{{ price.createDate }}:  $ {{ price.price }}
-                <button class="btn search-button" @click="del(price.id)" style=";margin-left: 5px; font-weight: 600;">
-                  Delete
-                </button></li>
-                </ul>
-
-               <!-- Submit button -->
-               <!-- <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Submit</button> -->
-                
+              </li>
+            </ul>
+                          
                 <!-- Close button -->
-                <button type="button" class="btn btn-secondary" @click="closeForm1" style="margin-top: 10px;" >Close</button>
+                <button type="button" class="btn btn-secondary" @click="closeForm1" style="flex: 0.5;" >Close</button>
 
               <!-- </form> -->
               <!-- Form ends here -->
