@@ -7,13 +7,12 @@
           <i class="fa fa-shopping-bag"></i> Product
           </span>
           <!-- <button class="btn btn-primary" @click="showForm = true">Create</button> -->
-          <router-link
-            :to="{ name: 'crepro' }"
-            class="btn btn-primary" 
+          <button class="btn btn-primary"
             v-if="isLogin!=null"
+            @click="showForm = true"
              ><!--  -->
             Create Product
-             </router-link>
+          </button>
              <router-link
         :to="{ name: 'UpdBrand' }"
       class="btn btn-primary" style="margin-left: 20px;"
@@ -31,8 +30,38 @@
     <!-- </div> -->
 
     
-        <!-- Conditionally render the form based on showForm -->
-        <div v-if="showForm"  class="fullscreen-form">
+      
+
+    <div  class="row gy-2">
+      <div v-for="product in products" :key="product.id" class="col-md-4 col-lg-3 col-12 mb-3">
+      <router-link
+        :to="{ name: 'detail_category', params: { id: product.id} }"
+      >
+        <!-- 循环渲染品牌数据 -->
+        <div class="card border-0 shadow rounded-md">
+          <div class="card-img">
+            <!-- 显示产品图片  -->
+            <img
+              v-lazy="{ src: product.imageUrl }"
+              class="w-100"
+              style="height: 25em;object-fit:cover;border-top-left-radius: .25rem;border-top-right-radius: .25rem;"
+            />
+          </div>
+          <div class="card-body text-center">
+            <p class="card-title" style="font-weight: bold;">{{ product.productname }}</p>
+            <p class="card-title" style="font-weight:200;font-size: 11px;color: gray;">{{ product.brandname }}</p>
+            <p class="card-title" style="font-weight:400;font-size: 14px;">Current Price ${{ product.currentPrice }}</p>
+            <!-- 显示品牌名称 -->
+            <!-- 其他品牌数据 -->
+          </div>
+        </div>
+      </router-link>
+    </div>
+      </div>
+    </div>
+
+      <!-- Conditionally render the form based on showForm -->
+      <div v-if="showForm"  class="fullscreen-form">
           <div class="card border-0 rounded shadow">
             <div class="card-body">
               <h5 class="card-title">Create Product</h5>
@@ -75,7 +104,7 @@
                 </div>
 
                 <!-- Close button -->
-                <button type="button" class="btn btn-secondary" @click="closeForm">Close</button>
+                <button type="button" class="btn btn-secondary" style="margin-right: 10px;" @click="closeForm">Close</button>
 
                 <!-- Submit button -->
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -85,34 +114,6 @@
               </div>
             </div>
           </div>
-
-    <div v-if="!showForm" class="row gy-2">
-      <div v-for="product in products" :key="product.id" class="col-md-4 col-lg-3 col-12 mb-3">
-      <router-link
-        :to="{ name: 'detail_category', params: { id: product.id} }"
-      >
-        <!-- 循环渲染品牌数据 -->
-        <div class="card border-0 shadow rounded-md">
-          <div class="card-img">
-            <!-- 显示产品图片  -->
-            <img
-              v-lazy="{ src: product.imageUrl }"
-              class="w-100"
-              style="height: 25em;object-fit:cover;border-top-left-radius: .25rem;border-top-right-radius: .25rem;"
-            />
-          </div>
-          <div class="card-body text-center">
-            <p class="card-title" style="font-weight: bold;">{{ product.productname }}</p>
-            <p class="card-title" style="font-weight:200;font-size: 11px;color: gray;">{{ product.brandname }}</p>
-            <p class="card-title" style="font-weight:400;font-size: 14px;">Current Price ${{ product.currentPrice }}</p>
-            <!-- 显示品牌名称 -->
-            <!-- 其他品牌数据 -->
-          </div>
-        </div>
-      </router-link>
-    </div>
-      </div>
-    </div>
 </template>
 
 <!-- <style scoped>
@@ -129,6 +130,17 @@
 // import Category from '../../components/Category'
 //import Slider from '../../components/Slider'
 import axios from 'axios'
+
+// 假设你的 token 存储在变量中
+const token = localStorage.getItem('token');
+
+// 创建一个包含 token 的请求配置
+const config = {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+};
+
 // import { initCustomFormatter } from 'vue';
 // import { defineComponent} from 'vue'
 //import { useStore } from 'vuex'
@@ -208,77 +220,77 @@ export default {
   },
     init(){
       console.log("ppppppp");
+    },
+    closeForm() {
+      // Reset form fields and close the form
+      this.showForm = false;
+      this.selectedBrand = null;
+      this.productName = '';
+      this.storeAddress = '';
+      this.description = '';
+      this.currentPrice = null;
+      this.picture = '';
+
+      // 刷新页面
+    window.location.reload();
+    },
+
+    async handleFileChange(event) {
+    try {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await axios.post('http://localhost:8080/api/image/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      // 存储上传结果
+      this.resultFromUpload = response.data.result;
+
+      console.log('Upload successful:', this.resultFromUpload);
+    } catch (error) {
+      console.error('Upload failed:', error);
     }
-//     closeForm() {
-//       // Reset form fields and close the form
-//       this.showForm = false;
-//       this.selectedBrand = null;
-//       this.productName = '';
-//       this.storeAddress = '';
-//       this.description = '';
-//       this.currentPrice = null;
-//       this.picture = '';
+  },
 
-//       // 刷新页面
-//     window.location.reload();
-//     },
+    async submitForm() {
 
-//     async handleFileChange(event) {
-//     try {
-//       const file = event.target.files[0];
-//       const formData = new FormData();
-//       formData.append('file', file);
-
-//       const response = await axios.post('http://localhost:8080/api/image/upload', formData, {
-//         headers: {
-//           'Content-Type': 'multipart/form-data'
-//         }
-//       });
-
-//       // 存储上传结果
-//       this.resultFromUpload = response.data.result;
-
-//       console.log('Upload successful:', this.resultFromUpload);
-//     } catch (error) {
-//       console.error('Upload failed:', error);
-//     }
-//   },
-
-//     async submitForm() {
-
-//           const selectedBrandId = this.selectedBrand;
+          const selectedBrandId = this.selectedBrand;
           
-//           // 根据id找到对应的品牌对象
-//           const selectedBrand = this.brands.find(brand => brand.id === selectedBrandId);
+          // 根据id找到对应的品牌对象
+          const selectedBrand = this.brands.find(brand => brand.id === selectedBrandId);
 
-//             // 构造发送给后端的数据对象
-//             const formData = {
-//             brand_id: this.selectedBrand,
-//             brandname: selectedBrand.brandname,  // 填充相应的数据，例如品牌名称
-//             currentPrice: this.currentPrice,
-//             description: this.description,
-//             imageUrl: this.resultFromUpload,
-//             productname: this.productName,
-//             storeAddress: this.storeAddress,
-//           };
-//           console.log(formData)
+            // 构造发送给后端的数据对象
+            const formData = {
+            brand_id: this.selectedBrand,
+            brandname: selectedBrand.brandname,  // 填充相应的数据，例如品牌名称
+            currentPrice: this.currentPrice,
+            description: this.description,
+            imageUrl: this.resultFromUpload,
+            productname: this.productName,
+            storeAddress: this.storeAddress,
+          };
+          console.log(formData)
 
-//           if(formData != null){
-//           try {
-//             // 发送 POST 请求
-//             const response = await axios.post('http://localhost:8080/api/products', formData);
+          if(formData != null){
+          try {
+            // 发送 POST 请求
+            const response = await axios.post('http://localhost:8080/api/products', formData, config);
 
-//             // 处理响应，例如检查是否成功保存数据
-//             console.log('Data saved successfully:', response.data);
+            // 处理响应，例如检查是否成功保存数据
+            console.log('Data saved successfully:', response.data);
 
-//             // 关闭表单
-//             this.closeForm();
-//           } catch (error) {
-//             // 处理请求错误
-//             console.error('Error saving data:', error);
-//           }
-//           }
-//        },
+            // 关闭表单
+            this.closeForm();
+          } catch (error) {
+            // 处理请求错误
+            console.error('Error saving data:', error);
+          }
+          }
+       },
    },
   };
     

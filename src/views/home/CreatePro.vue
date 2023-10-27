@@ -50,7 +50,7 @@
                   <textarea id="description" v-model="description" class="form-control" maxlength="200"  required></textarea>
                 </div>
 
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                   <label for="currentPrice">Current Price</label>
                   <input type="number" id="currentPrice" v-model="currentPrice" class="form-control" step="0.01"  required>
                 </div>
@@ -62,7 +62,7 @@
                 
                  <div v-if="errorMessage" class="error-message" style="color: red;">
                     {{ errorMessage }}
-                  </div>
+                  </div> -->
 
                 <!-- Submit button -->
                 <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Submit</button>

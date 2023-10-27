@@ -10,7 +10,7 @@
               <label class="fw-bold" style="font-size: 19px;">{{ product.productname }}</label>
               
               <div class="d-flex">
-              <button class="btn btn-danger" v-if="isAdmin==1" @click="delPro" style="margin-left: 100px;">Delete</button>
+              <button class="btn btn-danger" v-if="isAdmin==1" @click="delPro" style="margin-left: 100px;margin-right: 10px;">Delete</button>
               <button class="btn btn-primary" v-if="isLogin!=null" @click="showForm = true">Edit</button>
               </div>
           </div>
@@ -78,7 +78,7 @@
                                 Lowest Price：$
                                 {{ product.lowestPrice }} 
                             </span>
-                            <button class="btn btn-primary" v-if="isAdmin==1" @click="showForm1 = true" style="margin-left: 55%;">Delete History Price</button>
+                            <button class="btn btn-primary" v-if="isAdmin==1" @click="showForm1 = true" style="margin-left: 50%;">Delete History Price</button>
                 </div>
                 <div>
                     <canvas ref="lineChart" width="400" height="400"></canvas>
