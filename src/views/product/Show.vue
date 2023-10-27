@@ -44,14 +44,16 @@
         </div>-->
 
         <div class="row">
-    <div class="col-md-4"> <!-- 控制图片的宽度，这里使用col-md-4 -->
+    <div class="col-md-5"> <!-- 控制图片的宽度，这里使用col-md-4 -->
       <div class="card border-0 rounded shadow">
       <div class="card-body">
           <div class="d-flex justify-content-between">
               <label class="fw-bold" style="font-size: 20px;">{{ product.productname }}</label>
               
-              <button class="btn btn-primary" v-if="isAdmin==1" @click="delPro" style="margin-left: 100px;">Delete</button>
+              <div class="d-flex">
+              <button class="btn btn-danger" v-if="isAdmin==1" @click="delPro" style="margin-left: 100px;">Delete</button>
               <button class="btn btn-primary" v-if="isLogin!=null" @click="showForm = true">Edit</button>
+              </div>
           </div>
           <div class="weight">
               <label class="fw-bold me-5" style="font-size: 18px;">Address:</label>
@@ -76,7 +78,7 @@
         </div>
     </div>
 
-    <div class="col-md-8"> <!-- 控制右侧内容的宽度，这里使用col-md-8 -->
+    <div class="col-md-7"> <!-- 控制右侧内容的宽度，这里使用col-md-8 -->
         <div class="card border-0 rounded shadow">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
@@ -142,7 +144,7 @@
               <!-- Form starts here -->
               <form @submit.prevent="submitNewPrice" >
               <div class="mb-3">
-                  <input type="number" id="newPrice" v-model="newPrice" class="form-control" step="0.01"  required>
+                  <input type="number" id="newPrice" v-model="newPrice" class="form-control" step="0.01" required>
                 </div>
 
                  <!-- Submit button -->
@@ -172,7 +174,7 @@
                 <!-- Other form fields -->
                 <div class="mb-6">
                   <label for="productname">Product Name</label>
-                  <input type="text" id="productname" v-model="productname" class="form-control" maxlength="50" required>
+                  <input type="text" id="productname" v-model="productname" class="form-control" maxlength="27" required>
                 </div>
 
                 <div class="mb-6">
@@ -288,7 +290,7 @@ export default {
             this.isWatching = response.data;
           })
           .catch(error => {
-          console.error("检查关注状态时出错：", error);
+          console.error("Subscription has error ：", error);
           });
             }
            
