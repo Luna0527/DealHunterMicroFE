@@ -305,12 +305,12 @@ export default {
     axios.delete(`http://localhost:8080/api/products/${localStorage.getItem('proID')}`, config)
   .then(response => {
     // 请求成功处理
-    console.log('删除产品成功',response.data);
+    console.log('Delete successfully !',response.data);
     this.$router.push({ name: 'DetailProduct'});
   })
   .catch(error => {
     // 请求失败处理
-    console.error('删除产品时出错：', error);
+    console.error('An error occurred while deleting the product：', error);
   });
     },
     addToWatch(){
@@ -318,12 +318,12 @@ export default {
       axios.post(`http://localhost:8080/api/products/${localStorage.getItem('proID')}/addWatchers`, null,config) 
       .then(response => {
     // 请求成功处理
-        console.log('添加用户关注成功', response.data);
+        console.log('Add user follow successfully.', response.data);
         location.reload();
        })
       .catch(error => {
       // 请求失败处理
-       console.error('添加用户关注时出错：', error);
+       console.error('An error occurred when users subscribe product:', error);
       });
     }, 
 
@@ -332,12 +332,12 @@ export default {
       axios.delete(`http://localhost:8080/api/products/${localStorage.getItem('proID')}/deleteWatchers`,config) 
       .then(response => {
     // 请求成功处理
-        console.log('删除用户关注成功', response.data);
+        console.log('Deleting user subscription successfully.', response.data);
         location.reload();
        })
       .catch(error => {
       // 请求失败处理
-       console.error('删除用户关注时出错：', error);
+       console.error('An error occurred while unsubscribing：', error);
       });
     },
 
@@ -431,7 +431,6 @@ export default {
 
     async submitForm() {
 
-
         // 构造发送给后端的数据对象
         const formData = {
         brand_id: this.product.brand.id,
@@ -456,6 +455,7 @@ export default {
 
         // 关闭表单
         this.closeForm();
+        location.reload();
 
       } catch (error) {
         // 处理请求错误
