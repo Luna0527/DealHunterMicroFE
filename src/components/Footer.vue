@@ -68,7 +68,7 @@
                     <hr style="border-top: 3px solid rgb(154 155 156);border-radius:.5rem">
                     <p>
                         <i class="fa fa-clock"></i> Email :
-                        111
+                        shihaizhou1104@gmail.com
                     </p>
                     <p>
                         <i class="fa fa-map-marker"></i> Whatsapp:
