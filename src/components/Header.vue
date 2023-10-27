@@ -131,7 +131,7 @@ export default {
         localStorage.removeItem('email');
         localStorage.removeItem('userId');
         localStorage.removeItem('isAdmin');
-
+ 
         this.$router.push({ name: 'home' }).then(() => {
         // 跳转完成后刷新页面
             location.reload();

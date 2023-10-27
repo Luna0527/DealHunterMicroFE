@@ -218,7 +218,7 @@ export default {
           try {
             // 发送 POST 请求
             const response = await axios.post('http://localhost:8080/api/products', formData ,config);
-
+            alert("Create sucessfully!");
             // 处理响应，例如检查是否成功保存数据
             console.log('Data saved successfully:', response.data);
 

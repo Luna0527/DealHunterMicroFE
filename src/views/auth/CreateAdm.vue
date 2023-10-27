@@ -139,12 +139,12 @@ export default {
 
             // 处理响应，例如检查是否成功保存数据
             console.log('Data saved successfully:', response.data);
-
+            alert('Create successful!');
             // 关闭表单
             this.closeForm();
           } catch (error) {
             // 处理请求错误
-            alert("Not authorized (Admin Only)!");
+            // alert("Not authorized (Admin Only)!");
             this.closeForm();
             console.error('Error saving data:', error);
           }

@@ -1,47 +1,6 @@
 <template>
     <div class="container mt-5 mb-5">
-         <!--<div class="row" >
-            <div class="col-12 d-none d-md-block">
-                <div class="card border-0 rounded shadow">
-                    <content-loader
-                        viewBox="0 0 420 135"
-                        :speed="2"
-                        primaryColor="#f3f3f3"
-                        secondaryColor="#ecebeb"
-                    >
-                        <rect x="5" y="7" rx="3" ry="3" width="130" height="120" />
-                        <rect x="146" y="7" rx="3" ry="3" width="85" height="13" />
-                        <rect x="146" y="34" rx="3" ry="3" width="50" height="7" />
-                        <rect x="200" y="34" rx="3" ry="3" width="30" height="7" />
-                        <rect x="146" y="52" rx="3" ry="3" width="63" height="7" />
-                        <rect x="146" y="69" rx="3" ry="3" width="155" height="7" />
-                        <rect x="146" y="88" rx="3" ry="3" width="40" height="7" />
-                        <rect x="190" y="88" rx="3" ry="3" width="40" height="7" />
-                        <rect x="146" y="109" rx="3" ry="3" width="267" height="18" />
-                    </content-loader>
-                </div>
-            </div> -->
-            <!-- <div class="col-12 d-block d-sm-block d-md-none">
-                <div class="card border-0 rounded shadow">
-                    <content-loader
-                        viewBox="0 0 450 700"
-                        :speed="2"
-                        primaryColor="#f3f3f3"
-                        secondaryColor="#ecebeb"
-                    >
-                        <rect x="15" y="15" rx="5" ry="5" width="420" height="290" />
-                        <rect x="15" y="336" rx="5" ry="5" width="350" height="42" />
-                        <rect x="15" y="395" rx="5" ry="5" width="150" height="25" />
-                        <rect x="180" y="395" rx="5" ry="5" width="100" height="25" />
-                        <rect x="15" y="445" rx="5" ry="5" width="200" height="30" />
-                        <rect x="15" y="505" rx="5" ry="5" width="400" height="25" />
-                        <rect x="15" y="560" rx="5" ry="5" width="110" height="25" />
-                        <rect x="140" y="560" rx="5" ry="5" width="110" height="25" />
-                        <rect x="15" y="620" rx="5" ry="5" width="420" height="50" />
-                    </content-loader>
-                </div>
-            </div> 
-        </div>-->
+         
 
         <div class="row">
     <div class="col-md-4"> <!-- 控制图片的宽度，这里使用col-md-4 -->
@@ -117,6 +76,7 @@
                                 Lowest Price：$
                                 {{ product.lowestPrice }} 
                             </span>
+                            <button class="btn btn-primary" v-if="isAdmin==1" @click="showForm1 = true" style="margin-left: 55%;">Delete History Price</button>
                 </div>
                 <div>
                     <canvas ref="lineChart" width="400" height="400"></canvas>
@@ -196,7 +156,55 @@
 
               </div>
             </div>
-          </div>                    
+          </div>   
+          
+          <!-- Delete History form -->
+        <!--Conditionally render the form based on showForm -->
+        <div v-if="showForm1"  class="fullscreen-form" >
+          <div class="card border-0 rounded shadow" style="width: 50%;">
+            <div class="card-body"  >
+              <h5 class="card-title">Delete History Price</h5>
+              
+              <!-- Form starts here -->
+              <!-- <form @submit.prevent="submitForm" >
+                <div class="mb-6" >
+                  <label for="productname">Brand Name</label>
+                  <input type="text" id="brandname" v-model="brandname" class="form-control" :readonly="true" maxlength="50" required>
+                </div>
+                Other form fields
+                <div class="mb-6">
+                  <label for="productname">Product Name</label>
+                  <input type="text" id="productname" v-model="productname" class="form-control" maxlength="50" required>
+                </div>
+
+                <div class="mb-6">
+                  <label for="storeAddress">Store Address</label>
+                  <input type="text" id="storeAddress" v-model="storeAddress" class="form-control" maxlength="200" required>
+                </div>
+
+                <div class="mb-6">
+                  <label for="description">Description</label>
+                  <textarea id="description" v-model="description" class="form-control" maxlength="255"  required></textarea>
+                </div> -->
+                <ul>
+                <li v-for="price in priceHistory" :key="price.id">{{ price.createDate }}:  $ {{ price.price }}
+                <button class="btn search-button" @click="del(price.id)" style=";margin-left: 5px; font-weight: 600;">
+                  Delete
+                </button></li>
+                </ul>
+
+               <!-- Submit button -->
+               <!-- <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Submit</button> -->
+                
+                <!-- Close button -->
+                <button type="button" class="btn btn-secondary" @click="closeForm1" style="margin-top: 10px;" >Close</button>
+
+              <!-- </form> -->
+              <!-- Form ends here -->
+
+              </div>
+            </div>
+          </div>   
 
     </div>
 </template>
@@ -226,6 +234,7 @@ export default {
       formattedDates:[],
       lineChart: null, // 保存图表实例
       showForm:false,
+      showForm1:false,
       newpriceForm:false,
       productname:"",
       storeAddress:"",
@@ -300,6 +309,21 @@ export default {
     }
   },
   methods: {
+    del(id) {
+      console.log("Delete");
+      axios
+        .delete('http://localhost:8080/api/priceHistory/price-history/remove/' + id, config)
+        .then((response) => {
+          // this.brands = response.data;
+          console.log(response.data);
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.error("Error deleting brand: ", error);
+        });
+    },
+
+
     delPro(){
   // 发起DELETE请求
     axios.delete(`http://localhost:8080/api/products/${localStorage.getItem('proID')}`, config)
@@ -343,6 +367,9 @@ export default {
 
     closeForm() {
       this.showForm = false;
+    },
+    closeForm1() {
+      this.showForm1 = false;
     },
 
     
@@ -453,9 +480,9 @@ export default {
 
         // 处理响应，例如检查是否成功保存数据
         console.log('Data saved successfully:', response.data);
-
+        
         // 关闭表单
-        this.closeForm();
+        this.closeForm();window.location.reload();
 
       } catch (error) {
         // 处理请求错误

@@ -72,7 +72,7 @@
                     </p>
                     <p>
                         <i class="fa fa-map-marker"></i> Whatsapp:
-                        222
+                        <img src="../assets/whats.jpg"  width="80" height="80" style="margin-left: 20px;">
                     </p>
                 </div>
             </div>

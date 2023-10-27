@@ -106,7 +106,7 @@ data(){
     // console.log(localStorage.getItem('token'));
     // console.log(localStorage.getItem('email'));
     console.log(localStorage.getItem('isAdmin'));
-    // alert('Login success!');
+    alert('Login success!');
     this.$router.push({ name: 'home' }).then(() => {
     // 跳转完成后刷新页面
         location.reload();

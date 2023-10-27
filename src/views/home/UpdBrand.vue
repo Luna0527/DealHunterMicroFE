@@ -15,14 +15,14 @@
     </div>
 
     <div class="gy-2">
-      <div v-for="brand in brands" :key="brand.id">
+      <div v-for="(brand, index) in brands" :key="brand.id">
         <div class="row mb-3">
           <div class="col-md-12">
             <div class="card border-0 shadow rounded-md">
               <div class="card-body d-flex justify-content-between align-items-center">
                 <!-- 用flex调伸展比例 -->
                 <p class="card-title" style="flex: 0.5;font-weight: 400; color: gray; display: inline-block;">
-                  <span>{{ brand.id }}</span>
+                  <span>{{index+1}}</span>
                 </p>
                 <p class="card-title" style="flex: 0.7;font-weight: bold; display: inline-block;">
                   <span v-if="!brand.editMode">{{ brand.brandname }}</span>
@@ -68,6 +68,7 @@ export default {
     return {
       editMode: false,
       brands: [],
+      // index:1,
     };
   },
   mounted() {
@@ -116,6 +117,7 @@ export default {
             .then((response) => {
             // 处理响应，例如检查是否成功保存数据
             console.log('Data modofied successfully:', response.data);
+            
           })
           .catch ((error) => {
             // 处理请求错误
