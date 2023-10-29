@@ -86,7 +86,7 @@ export default {
 
     fetchBrandData() {
       axios
-        .get("http://localhost:8080/api/brands")
+        .get("http://159.223.50.155/api/brands")
         .then((response) => {
           this.brands = response.data.map((brand) => ({
             ...brand,
@@ -113,7 +113,7 @@ export default {
       if(formData != null){
         console.log(formData);
             axios
-            .put('http://localhost:8080/api/brands', formData, config)
+            .put('http://159.223.50.155/api/brands', formData, config)
             .then((response) => {
             // 处理响应，例如检查是否成功保存数据
             console.log('Data modofied successfully:', response.data);
@@ -129,7 +129,7 @@ export default {
     del(id) {
       console.log("Delete");
       axios
-        .delete('http://localhost:8080/api/brands/' + id, config)
+        .delete('http://159.223.50.155/api/brands/' + id, config)
         .then((response) => {
           this.brands = response.data;
           console.log(response.data);

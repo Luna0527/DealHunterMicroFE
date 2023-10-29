@@ -110,7 +110,7 @@ data(){
       };
       console.log(requestData);
   // 发起HTTP POST请求到后端的登录接口
-  axios.post('http://localhost:8080/api/user/signup', requestData)
+  axios.post('http://159.223.50.155/api/user/signup', requestData)
   .then(response => {
     // 处理后端的响应数据
     console.log(response.data);

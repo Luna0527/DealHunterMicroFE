@@ -11,7 +11,7 @@ const app = createApp(App);
 
 // 设置 Axios 的基本 URL
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = 'http://159.223.50.155';
 app.config.globalProperties.$axios = axios;
 
 app.use(router);

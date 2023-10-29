@@ -120,7 +120,7 @@ export default {
     mounted() {
         console.log(this.isAdmin);
         axios
-      .get('http://localhost:8080/api/products/productname', {
+      .get('http://159.223.50.155/api/products/productname', {
         params: {
           productname:this.$route.params.name// 你的产品名称
         },
