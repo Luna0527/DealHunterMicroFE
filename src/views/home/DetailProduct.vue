@@ -101,7 +101,7 @@
 
                 <div class="mb-3">
                   <label for="picture">Upload Picture</label>
-                  <input type="file" id="picture" @change="handleFileChange()" accept="image/*">
+                  <input type="file" id="picture" @change="handleFileChange" accept="image/*">
                 </div>
                 
                  <div v-if="errorMessage" class="error-message" style="color: red;">
@@ -248,7 +248,7 @@ export default {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axios.post('http://159.223.50.155/api/image/upload', formData, {
+      const response = await axios.post('http://159.223.50.155/api/image/upload', formData,config, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
