@@ -1,9 +1,10 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   transpileDependencies: true,
-  devServer:{
-    port: 8081  } 
-})
+  devServer: {
+    port: 8081,
+  },
+});
 
 // const { defineConfig } = require('@vue/cli-service')
 // module.exports = defineConfig({
@@ -15,7 +16,7 @@ module.exports = defineConfig({
 //         pathRewrite: { // 路径改写规则
 //           '^/api': '' // 以/api/为开头的改写为'/'
 //         },
-//         target: 'http://159.223.50.155',
+//         target: 'http://167.172.71.33:31003',
 //         changeOrigin: true, // 跨域访问设置，true代表跨域
 //         ws: true,
 //         'secure': false, // false为http访问，true为https访问
@@ -25,4 +26,4 @@ module.exports = defineConfig({
 // })
 
 // // 添加日志消息
-// console.log("Vue CLI proxy configuration loaded."); 
+// console.log("Vue CLI proxy configuration loaded.");

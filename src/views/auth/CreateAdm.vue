@@ -135,7 +135,7 @@ export default {
           if(formData != null&& token!=null){
           try {
             // 发送 POST 请求
-            const response = await axios.post('http://159.223.50.155/api/user/admin/create', formData, config);
+            const response = await axios.post('http://167.172.71.33:31003/api/user/admin/create', formData, config);
 
             // 处理响应，例如检查是否成功保存数据
             console.log('Data saved successfully:', response.data);

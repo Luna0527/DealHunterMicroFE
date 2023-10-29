@@ -1,9 +1,8 @@
-import axios from 'axios'
+import axios from "axios";
 
 const Api = axios.create({
-    // baseURL: 'https://store.appdev.my.id/api'
-    baseURL: 'http://159.223.50.155/api/'
+  // baseURL: 'https://store.appdev.my.id/api'
+  baseURL: "http://167.172.71.33:31003/api/",
+});
 
-})
-
-export default Api
+export default Api;

@@ -175,7 +175,7 @@ export default {
     if(this.$route.params.name!=null){
       // window.location.reload();
         axios
-      .get('http://159.223.50.155/api/products/productname', {
+      .get('http://167.172.71.33:31003/api/product/productname', {
         params: {
           productname:this.$route.params.name// 你的产品名称
         },
@@ -191,7 +191,7 @@ export default {
       });
     }else{
         axios
-      .get('http://159.223.50.155/api/products')
+      .get('http://167.172.71.33:31003/api/product/')
       .then((response) => {
         this.products = response.data; // 将数据保存
         console.log(response.data);
@@ -205,7 +205,7 @@ export default {
 
     //所有brandlist
     axios
-      .get('http://159.223.50.155/api/brands')
+      .get('http://167.172.71.33:31003/api/brand/')
       .then((response) => {
         this.brands = response.data;
         console.log(response.data);
@@ -248,7 +248,7 @@ export default {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axios.post('http://159.223.50.155/api/image/upload', formData,config, {
+      const response = await axios.post('http://167.172.71.33:31003/api/image/upload', formData,config, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -285,7 +285,7 @@ export default {
           if(formData != null){
           try {
             // 发送 POST 请求
-            const response = await axios.post('http://159.223.50.155/api/products', formData, config);
+            const response = await axios.post('http://167.172.71.33:31003/api/product/', formData, config);
 
             // 处理响应，例如检查是否成功保存数据
             console.log('Data saved successfully:', response.data);
