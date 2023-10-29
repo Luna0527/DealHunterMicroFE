@@ -7,13 +7,12 @@
           <i class="fa fa-shopping-bag"></i> Product
           </span>
           <!-- <button class="btn btn-primary" @click="showForm = true">Create</button> -->
-          <router-link
-            :to="{ name: 'crepro' }"
-            class="btn btn-primary" 
+          <button class="btn btn-primary"
             v-if="isLogin!=null"
+            @click="showForm = true"
              ><!--  -->
             Create Product
-             </router-link>
+          </button>
              <router-link
         :to="{ name: 'UpdBrand' }"
       class="btn btn-primary" style="margin-left: 20px;"
@@ -118,7 +117,6 @@
                     </router-link>
                 </div> -->
     <!-- </div>
-  </div>
     </div>  -->
 </template>
 
@@ -141,6 +139,18 @@ import axios from 'axios'
 //import { useStore } from 'vuex'
 //import { useStore } from 'vuex', onMounted 
 // import { ContentLoader } from "vue-content-loader"
+
+// 假设你的 token 存储在变量中
+const token = localStorage.getItem('token');
+
+// 创建一个包含 token 的请求配置
+const config = {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+};
+
+
 export default {
   data() {
     return {
@@ -210,9 +220,81 @@ if(this.$route.params.name!=null){
   },
     init(){
       console.log("ppppppp");
+    },
+    closeForm() {
+      // Reset form fields and close the form
+      this.showForm = false;
+      this.selectedBrand = null;
+      this.productName = '';
+      this.storeAddress = '';
+      this.description = '';
+      this.currentPrice = null;
+      this.picture = '';
+
+      // 刷新页面
+    window.location.reload();
+    },
+
+    async handleFileChange(event) {
+    try {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await axios.post('http://159.223.50.155/api/image/upload', formData,config, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      // 存储上传结果
+      this.resultFromUpload = response.data.result;
+
+      console.log('Upload successful:', this.resultFromUpload);
+    } catch (error) {
+      console.error('Upload failed:', error);
     }
   },
-};
+
+    async submitForm() {
+
+          const selectedBrandId = this.selectedBrand;
+          
+          // 根据id找到对应的品牌对象
+          const selectedBrand = this.brands.find(brand => brand.id === selectedBrandId);
+
+            // 构造发送给后端的数据对象
+            const formData = {
+            brand_id: this.selectedBrand,
+            brandname: selectedBrand.brandname,  // 填充相应的数据，例如品牌名称
+            currentPrice: this.currentPrice,
+            description: this.description,
+            imageUrl: this.resultFromUpload,
+            productname: this.productName,
+            storeAddress: this.storeAddress,
+          };
+          console.log(formData)
+
+          if(formData != null){
+          try {
+            // 发送 POST 请求
+            const response = await axios.post('http://159.223.50.155/api/products', formData, config);
+
+            // 处理响应，例如检查是否成功保存数据
+            console.log('Data saved successfully:', response.data);
+
+            // 关闭表单
+            this.closeForm();
+          } catch (error) {
+            // 处理请求错误
+            console.error('Error saving data:', error);
+          }
+          }
+       },
+   },
+  };
+    
+
 // export default {
 //     components: {
 //         // Category,
@@ -264,6 +346,7 @@ if(this.$route.params.name!=null){
 //         }
 //     }
 // }
+
 </script>
 <style>
 .router-link-active {
@@ -274,4 +357,16 @@ if(this.$route.params.name!=null){
     text-decoration: none;
     color: black;
   }
+  
+  .fullscreen-form {
+  position: fixed; /* 固定在视口中 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明的黑色背景蒙层 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
   </style>
