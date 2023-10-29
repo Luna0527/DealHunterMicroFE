@@ -75,6 +75,7 @@
 // import { useRouter } from 'vue-router';
 import axios from 'axios'; 
 
+
 export default {
 data(){
   return {
@@ -123,69 +124,5 @@ data(){
       }
     
 };
-// import { ref, reactive } from 'vue'
-// import { useStore } from 'vuex'
-// import { useRouter } from 'vue-router'
-// import Swal from 'sweetalert2'
 
-// export default {
-//     setup() {
-//         const user = reactive({
-//             name: '',
-//             email: '',
-//             password: '',
-//             password_confirmation: ''
-//         })
-
-//         const validation = ref([])
-
-//         const store = useStore()
-
-//         const router = useRouter()
-
-//         const register = () => {
-//             let name = user.name
-//             let email = user.email
-//             let password = user.password
-//             let password_confirmation = user.password_confirmation
-
-//             Swal.fire({
-//                 title: 'Loading...',
-//                 text: 'Just one moment!',
-//                 icon: "info",
-//                 allowEscapeKey: false,
-//                 allowOutsideClick: false,
-//                 didOpen: () => {
-//                     Swal.showLoading()
-//                 }
-//             })
-//             store.dispatch('auth/register', {
-//                 name,
-//                 email,
-//                 password,
-//                 password_confirmation
-//             })
-//                 .then(() => {
-//                     Swal.close()
-//                     router.push({ name: 'dashboard' })
-//                     Swal.fire({
-//                         title: "Success",
-//                         text: "Registered.",
-//                         icon: "success",
-//                         showConfirmButton: false,
-//                         timer: 1500
-//                     });
-//                 }).catch(error => {
-//                     Swal.close()
-//                     validation.value = error
-//                 })
-//         }
-
-//         return {
-//             user,
-//             validation,
-//             register
-//         }
-//     }
-// }
 </script>
