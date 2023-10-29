@@ -35,12 +35,12 @@
 
                 <div class="mb-3">
                   <label for="password">Password</label>
-                  <textarea id="password" v-model="password" class="form-control" required></textarea>
+                  <input type="password" id="password" v-model="password" class="form-control" required />
                 </div>
 
                 <div class="mb-3">
                   <label for="email">Email</label>
-                  <textarea id="email" v-model="email" class="form-control" required></textarea>
+                  <input type="text" id="email" v-model="email" class="form-control" required />
                 </div>
 
                 
