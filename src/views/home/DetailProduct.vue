@@ -61,7 +61,8 @@
     </div>
 
       <!-- Conditionally render the form based on showForm -->
-      <div v-if="showForm"  class="fullscreen-form">
+      <!-- Conditionally render the form based on showForm -->
+      <div v-if="showForm" class="fullscreen-form">
           <div class="card border-0 rounded shadow">
             <div class="card-body">
               <h5 class="card-title">Create Product</h5>
@@ -80,34 +81,40 @@
                 <!-- Other form fields -->
                 <div class="mb-3">
                   <label for="productname">Product Name</label>
-                  <input type="text" id="productname" v-model="productName" class="form-control" required>
+                  <input type="text" id="productname" v-model="productName" class="form-control" maxlength="50"  required>
                 </div>
 
                 <div class="mb-3">
                   <label for="storeAddress">Store Address</label>
-                  <input type="text" id="storeAddress" v-model="storeAddress" class="form-control" required>
+                  <input type="text" id="storeAddress" v-model="storeAddress" class="form-control" maxlength="200"  required>
                 </div>
 
                 <div class="mb-3">
                   <label for="description">Description</label>
-                  <textarea id="description" v-model="description" class="form-control" required></textarea>
+                  <textarea id="description" v-model="description" class="form-control" maxlength="200"  required></textarea>
                 </div>
 
                 <div class="mb-3">
                   <label for="currentPrice">Current Price</label>
-                  <input type="number" id="currentPrice" v-model="currentPrice" class="form-control" required>
+                  <input type="number" id="currentPrice" v-model="currentPrice" class="form-control" step="0.01"  required>
                 </div>
 
                 <div class="mb-3">
                   <label for="picture">Upload Picture</label>
-                  <input type="file" id="picture" @change="handleFileChange" accept="image/*">
+                  <input type="file" id="picture" @change="handleFileChange()" accept="image/*">
                 </div>
-
-                <!-- Close button -->
-                <button type="button" class="btn btn-secondary" style="margin-right: 10px;" @click="closeForm">Close</button>
+                
+                 <div v-if="errorMessage" class="error-message" style="color: red;">
+                    {{ errorMessage }}
+                  </div>
 
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Submit</button>
+                
+                <!-- Close button -->
+                <button type="button" class="btn btn-secondary" @click="closeForm()" >Close</button>
+
+                
               </form>
               <!-- Form ends here -->
 
