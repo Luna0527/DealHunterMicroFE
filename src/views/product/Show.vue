@@ -238,7 +238,7 @@ export default {
     if (localStorage.getItem('proID') != null) {
       // 使用 Axios 从后端接口获取产品详细信息
       axios
-        .get(`http://localhost:8080/api/products/${localStorage.getItem('proID')}`)
+        .get(`http://159.223.50.155/api/products/${localStorage.getItem('proID')}`)
         .then((response) => {
           this.product = response.data; // 将产品详细信息保存
           console.log(response.data);
@@ -250,7 +250,7 @@ export default {
 
           // 获取价格历史数据
           axios
-            .get(`http://localhost:8080/api/priceHistory/price-history/product/${localStorage.getItem('proID')}`)
+            .get(`http://159.223.50.155/api/priceHistory/price-history/product/${localStorage.getItem('proID')}`)
             .then((priceHistoryResponse) => {
               this.priceHistory = priceHistoryResponse.data; // 将价格历史数据保存
               console.log(priceHistoryResponse.data);
@@ -271,7 +271,7 @@ export default {
 
             if(localStorage.getItem('userId')!=null){
             //判断关注
-            const url = `http://localhost:8080/api/products/${localStorage.getItem('proID')}/checkWatchers`;
+            const url = `http://159.223.50.155/api/products/${localStorage.getItem('proID')}/checkWatchers`;
       
            // 使用Vue Resource、Axios或其他HTTP请求库发送请求
            // 这里使用Axios作为示例
@@ -295,7 +295,7 @@ export default {
     del(id) {
       console.log("Delete");
       axios
-        .delete('http://localhost:8080/api/priceHistory/price-history/remove/' + id, config)
+        .delete('http://159.223.50.155/api/priceHistory/price-history/remove/' + id, config)
         .then((response) => {
           // this.brands = response.data;
           console.log(response.data);
@@ -309,7 +309,7 @@ export default {
 
     delPro(){
   // 发起DELETE请求
-    axios.delete(`http://localhost:8080/api/products/${localStorage.getItem('proID')}`, config)
+    axios.delete(`http://159.223.50.155/api/products/${localStorage.getItem('proID')}`, config)
   .then(response => {
     // 请求成功处理
     console.log('Delete successfully !',response.data);
@@ -322,7 +322,7 @@ export default {
     },
     addToWatch(){
       //const productId = this.$route.params.id;
-      axios.post(`http://localhost:8080/api/products/${localStorage.getItem('proID')}/addWatchers`, null,config) 
+      axios.post(`http://159.223.50.155/api/products/${localStorage.getItem('proID')}/addWatchers`, null,config) 
       .then(response => {
     // 请求成功处理
         console.log('Add user follow successfully.', response.data);
@@ -336,7 +336,7 @@ export default {
 
     delToWatch(){
       //const productId = this.$route.params.id;
-      axios.delete(`http://localhost:8080/api/products/${localStorage.getItem('proID')}/deleteWatchers`,config) 
+      axios.delete(`http://159.223.50.155/api/products/${localStorage.getItem('proID')}/deleteWatchers`,config) 
       .then(response => {
     // 请求成功处理
         console.log('Deleting user subscription successfully.', response.data);
@@ -426,7 +426,7 @@ export default {
 
     async submitNewPrice() {
       try {
-        const url = `http://localhost:8080/api/products/${this.product.id}/submit-price?newPrice=${this.newPrice}`;
+        const url = `http://159.223.50.155/api/products/${this.product.id}/submit-price?newPrice=${this.newPrice}`;
         const response = await axios.post(url,null,config);
 
         // 处理响应，如果需要的话
@@ -458,7 +458,7 @@ export default {
       if(formData != null){
       try {
         // 发送 POST 请求
-        const response = await axios.put('http://localhost:8080/api/products', formData, config);
+        const response = await axios.put('http://159.223.50.155/api/products', formData, config);
 
         // 处理响应，例如检查是否成功保存数据
         console.log('Data saved successfully:', response.data);

@@ -161,7 +161,7 @@ export default {
   mounted() {
 if(this.$route.params.name!=null){
         axios
-      .get('http://localhost:8080/api/products/brandname', {
+      .get('http://159.223.50.155/api/products/brandname', {
         params: {
           brandname:this.$route.params.name// 你的产品名称
         },
@@ -177,7 +177,7 @@ if(this.$route.params.name!=null){
       });
     }else{
         axios
-      .get('http://localhost:8080/api/products')
+      .get('http://159.223.50.155/api/products')
       .then((response) => {
         this.products = response.data; // 将数据保存
         console.log(response.data);
@@ -190,7 +190,7 @@ if(this.$route.params.name!=null){
     }
    //所有brandlist
    axios
-      .get('http://localhost:8080/api/brands')
+      .get('http://159.223.50.155/api/brands')
       .then((response) => {
         this.brands = response.data;
         console.log(response.data);

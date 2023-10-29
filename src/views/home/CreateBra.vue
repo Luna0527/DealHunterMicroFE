@@ -129,7 +129,7 @@ export default {
           if(formData != null){
           try {
             // 发送 POST 请求
-            const response = await axios.post('http://localhost:8080/api/brands', formData, config);
+            const response = await axios.post('http://159.223.50.155/api/brands', formData, config);
 
             // 处理响应，例如检查是否成功保存数据
             console.log('Data saved successfully:', response.data);

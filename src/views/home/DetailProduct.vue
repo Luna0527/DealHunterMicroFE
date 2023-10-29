@@ -175,7 +175,7 @@ export default {
     if(this.$route.params.name!=null){
       // window.location.reload();
         axios
-      .get('http://localhost:8080/api/products/productname', {
+      .get('http://159.223.50.155/api/products/productname', {
         params: {
           productname:this.$route.params.name// 你的产品名称
         },
@@ -191,7 +191,7 @@ export default {
       });
     }else{
         axios
-      .get('http://localhost:8080/api/products')
+      .get('http://159.223.50.155/api/products')
       .then((response) => {
         this.products = response.data; // 将数据保存
         console.log(response.data);
@@ -205,7 +205,7 @@ export default {
 
     //所有brandlist
     axios
-      .get('http://localhost:8080/api/brands')
+      .get('http://159.223.50.155/api/brands')
       .then((response) => {
         this.brands = response.data;
         console.log(response.data);
@@ -248,7 +248,7 @@ export default {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axios.post('http://localhost:8080/api/image/upload', formData, {
+      const response = await axios.post('http://159.223.50.155/api/image/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -285,7 +285,7 @@ export default {
           if(formData != null){
           try {
             // 发送 POST 请求
-            const response = await axios.post('http://localhost:8080/api/products', formData, config);
+            const response = await axios.post('http://159.223.50.155/api/products', formData, config);
 
             // 处理响应，例如检查是否成功保存数据
             console.log('Data saved successfully:', response.data);
