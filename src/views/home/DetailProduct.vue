@@ -63,7 +63,7 @@
 
                 <div class="mb-3">
                   <label for="currentPrice">Current Price</label>
-                  <input type="number" id="currentPrice" v-model="currentPrice" class="form-control" required>
+                  <input id="currentPrice" v-model="currentPrice" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
