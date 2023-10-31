@@ -182,6 +182,10 @@ if(this.$route.params.name!=null){
         this.isLoading = false; // 加载完成
       })
       .catch((error) => {
+        if(error.response.status === 404){
+          alert('Not found!');
+          location.reload();
+        }
         console.error('Error fetching data: ', error);
         this.isLoading = false; // 加载失败
       });

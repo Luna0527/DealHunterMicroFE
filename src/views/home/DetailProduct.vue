@@ -171,15 +171,20 @@ export default {
         axios
       .get('http://167.172.71.33:31003/api/product/productname', {
         params: {
-          productName:this.$route.params.name// 你的产品名称
+          productname:this.$route.params.name// 你的产品名称
         },
       })
       .then((response) => {
+
         this.products = response.data; // 将数据保存
-        console.log(response.data);
+      
         this.isLoading = false; // 加载完成
       })
       .catch((error) => {
+        if(error.response.status === 404){
+          alert('Not found!');
+          location.reload();
+        }
         console.error('Error fetching data: ', error);
         this.isLoading = false; // 加载失败
       });
@@ -187,6 +192,7 @@ export default {
         axios
       .get('http://167.172.71.33:31003/api/product/')
       .then((response) => {
+
         this.products = response.data; // 将数据保存
         console.log(response.data);
         this.isLoading = false; // 加载完成
