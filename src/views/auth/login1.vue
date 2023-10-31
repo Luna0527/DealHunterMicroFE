@@ -99,14 +99,14 @@ data(){
   .then(response => {
     // 处理后端的响应数据
     console.log(response.data.result);
-    localStorage.setItem('token', response.data.result.accessToken);
+    localStorage.setItem('token', response.data.result.token);
     localStorage.setItem('username', response.data.result.username);
     localStorage.setItem('email', response.data.result.email);
     localStorage.setItem('userId', response.data.result.userId);
     localStorage.setItem('isAdmin', response.data.result.isAdmin);
     // console.log(localStorage.getItem('token'));
     // console.log(localStorage.getItem('email'));
-    console.log(localStorage.getItem('isAdmin'));
+    console.log(localStorage.getItem('token'));
     alert('Login success!');
     this.$router.push({ name: 'home' }).then(() => {
     // 跳转完成后刷新页面
