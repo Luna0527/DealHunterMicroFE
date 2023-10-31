@@ -7,7 +7,7 @@
       <div class="card border-0 rounded shadow">
       <div class="card-body">
           <div class="d-flex justify-content-between">
-              <label class="fw-bold" style="font-size: 19px;">{{ product.productname }}</label>
+              <label class="fw-bold" style="font-size: 19px;">{{ product.productName }}</label>
               
               <div class="d-flex">
               <button class="btn btn-danger" v-if="isAdmin==1" @click="delPro" style="margin-left: 100px;margin-right: 10px;">Delete</button>
@@ -128,13 +128,13 @@
               <!-- Form starts here -->
               <form @submit.prevent="submitForm" >
                 <div class="mb-6" >
-                  <label for="productname">Brand Name</label>
-                  <input type="text" id="brandname" v-model="brandname" class="form-control" :readonly="true" maxlength="50" required>
+                  <label for="brandname">Brand Name</label>
+                  <input type="text" id="brandname" v-model="brandName" class="form-control" :readonly="true" maxlength="50" required>
                 </div>
                 <!-- Other form fields -->
                 <div class="mb-6">
                   <label for="productname">Product Name</label>
-                  <input type="text" id="productname" v-model="productname" class="form-control" maxlength="27" required>
+                  <input type="text" id="productname" v-model="productName" class="form-control" maxlength="27" required>
                 </div>
 
                 <div class="mb-6">
@@ -219,10 +219,10 @@ export default {
       showForm:false,
       showForm1:false,
       newpriceForm:false,
-      productname:"",
+      productName:"",
       storeAddress:"",
       description:"",
-      brandname:"",
+      brandName:"",
       userId: localStorage.getItem('userId'),
       isAdmin: localStorage.getItem('isAdmin'),
       isLogin:localStorage.getItem('username'),
@@ -242,10 +242,10 @@ export default {
         .then((response) => {
           this.product = response.data; // 将产品详细信息保存
           console.log(response.data);
-          this.productname = this.product.productname;
+          this.productName = this.product.productName;
           this.storeAddress = this.product.storeAddress;
           this.description = this.product.description;
-          this.brandname = this.product.brandname;
+          this.brandName = this.product.brandName;
 
 
           // 获取价格历史数据
@@ -443,14 +443,14 @@ export default {
 
         // 构造发送给后端的数据对象
         const formData = {
-        brand_id: this.product.brand.id,
-        brandname: this.product.brandname,  // 填充相应的数据，例如品牌名称
+        brand_id: this.product.brandId,
+        brandname: this.product.brandName,  // 填充相应的数据，例如品牌名称
         currentPrice: this.product.currentPrice,
         description: this.description,
         imageUrl: this.product.imageUrl,
         lowestPrice: this.product.lowestPrice,
         product_id:this.product.id,
-        productname: this.productname,
+        productName: this.productName,
         storeAddress: this.storeAddress,
       };
       console.log('edit upload data',formData)

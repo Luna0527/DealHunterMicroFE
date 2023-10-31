@@ -100,8 +100,8 @@
             />
           </div>
           <div class="card-body text-center">
-            <p class="card-title" style="font-weight: bold;">{{ product.productname }}</p>
-            <p class="card-title" style="font-weight:200;font-size: 11px;color: gray;">{{ product.brandname }}</p>
+            <p class="card-title" style="font-weight: bold;">{{ product.productName }}</p>
+            <p class="card-title" style="font-weight:200;font-size: 11px;color: gray;">{{ product.brandName }}</p>
             <p class="card-title" style="font-weight:400;font-size: 14px;">Current Price ${{ product.currentPrice }}</p>
             <!-- 显示品牌名称 -->
             <!-- 其他品牌数据 -->
@@ -171,7 +171,7 @@ export default {
         axios
       .get('http://167.172.71.33:31003/api/product/productname', {
         params: {
-          productname:this.$route.params.name// 你的产品名称
+          productName:this.$route.params.name// 你的产品名称
         },
       })
       .then((response) => {
@@ -267,11 +267,11 @@ export default {
             // 构造发送给后端的数据对象
             const formData = {
             brand_id: this.selectedBrand,
-            brandname: selectedBrand.brandname,  // 填充相应的数据，例如品牌名称
+            brandName: selectedBrand.brandname,  // 填充相应的数据，例如品牌名称
             currentPrice: this.currentPrice,
             description: this.description,
             imageUrl: this.resultFromUpload,
-            productname: this.productName,
+            productName: this.productName,
             storeAddress: this.storeAddress,
           };
           console.log(formData)
