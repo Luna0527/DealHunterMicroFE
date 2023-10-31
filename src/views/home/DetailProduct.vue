@@ -138,7 +138,7 @@ const token = localStorage.getItem('token');
 // 创建一个包含 token 的请求配置
 const config = {
   headers: {
-    'Authorization': `Bearer ${token}`
+    'Authorization': `${token}`
   }
 };
 
