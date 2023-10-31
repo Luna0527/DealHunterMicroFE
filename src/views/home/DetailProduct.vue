@@ -242,7 +242,7 @@ export default {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axios.post('http://167.172.71.33:31003/api/image/upload', formData,config, {
+      const response = await axios.post('http://167.172.71.33:31003/api/product/image/upload/', formData,config, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -250,7 +250,7 @@ export default {
 
       // 存储上传结果
       this.resultFromUpload = response.data.result;
-
+      console.log('Upload successful1:',  response.data);
       console.log('Upload successful:', this.resultFromUpload);
     } catch (error) {
       console.error('Upload failed:', error);
@@ -267,7 +267,7 @@ export default {
             // 构造发送给后端的数据对象
             const formData = {
             brand_id: this.selectedBrand,
-            brandName: selectedBrand.brandname,  // 填充相应的数据，例如品牌名称
+            brandname: selectedBrand.brandname,  // 填充相应的数据，例如品牌名称
             currentPrice: this.currentPrice,
             description: this.description,
             imageUrl: this.resultFromUpload,
@@ -279,6 +279,7 @@ export default {
           if(formData != null){
           try {
             // 发送 POST 请求
+            console.log(config);
             const response = await axios.post('http://167.172.71.33:31003/api/product/', formData, config);
 
             // 处理响应，例如检查是否成功保存数据
