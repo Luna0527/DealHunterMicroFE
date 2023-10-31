@@ -134,7 +134,7 @@ export default {
             // 处理响应，例如检查是否成功保存数据
             console.log('Data saved successfully:', response.data);
             localStorage.setItem('email', this.email);
-            alert("Change sucessfully!");
+            alert("Change success!");
             // 关闭表单
             this.closeForm();
           } catch (error) {

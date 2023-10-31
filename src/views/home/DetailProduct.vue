@@ -271,7 +271,7 @@ export default {
             currentPrice: this.currentPrice,
             description: this.description,
             imageUrl: this.resultFromUpload,
-            productName: this.productName,
+            productname: this.productName,
             storeAddress: this.storeAddress,
           };
           console.log(formData)
