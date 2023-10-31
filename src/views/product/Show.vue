@@ -250,7 +250,7 @@ export default {
 
           // 获取价格历史数据
           axios
-            .get(`http://167.172.71.33:31003/api/priceHistory/price-history/product/${localStorage.getItem('proID')}`)
+            .get(`http://167.172.71.33:31003/api/product/getProductPriceHistory/${localStorage.getItem('proID')}`)
             .then((priceHistoryResponse) => {
               this.priceHistory = priceHistoryResponse.data; // 将价格历史数据保存
               console.log(priceHistoryResponse.data);
@@ -439,7 +439,8 @@ export default {
       }
     },
 
-    async submitForm() {
+    //update product
+        async submitForm() {
 
         // 构造发送给后端的数据对象
         const formData = {
@@ -450,7 +451,7 @@ export default {
         imageUrl: this.product.imageUrl,
         lowestPrice: this.product.lowestPrice,
         product_id:this.product.id,
-        productName: this.productName,
+        productname: this.productName,
         storeAddress: this.storeAddress,
       };
       console.log('edit upload data',formData)
