@@ -95,8 +95,8 @@
             />
           </div>
           <div class="card-body text-center">
-            <p class="card-title" style="font-weight: bold;">{{ product.productname }}</p>
-            <p class="card-title" style="font-weight:200;font-size: 11px;color: gray;">{{ product.brandname }}</p>
+            <p class="card-title" style="font-weight: bold;">{{ product.productName }}</p>
+            <p class="card-title" style="font-weight:200;font-size: 11px;color: gray;">{{ product.brandName }}</p>
             <p class="card-title" style="font-weight:400;font-size: 14px;">Current Price ${{ product.currentPrice }}</p>
             <!-- 显示品牌名称 -->
             <!-- 其他品牌数据 -->
@@ -241,7 +241,7 @@ if(this.$route.params.name!=null){
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axios.post('http://159.223.50.155/api/image/upload', formData,config, {
+      const response = await axios.post('http://167.172.71.33:31003/api/product/image/upload/', formData,config, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -278,7 +278,7 @@ if(this.$route.params.name!=null){
           if(formData != null){
           try {
             // 发送 POST 请求
-            const response = await axios.post('http://159.223.50.155/api/products', formData, config);
+            const response = await axios.post('http://167.172.71.33:31003/api/product/', formData, config);
 
             // 处理响应，例如检查是否成功保存数据
             console.log('Data saved successfully:', response.data);
