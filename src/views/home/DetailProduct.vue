@@ -63,7 +63,7 @@
 
                 <div class="mb-3">
                   <label for="currentPrice">Current Price</label>
-                  <input id="currentPrice" v-model="currentPrice" class="form-control" required>
+                  <input type="number" id="currentPrice" v-model="currentPrice" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
@@ -250,7 +250,7 @@ export default {
 
       // 存储上传结果
       this.resultFromUpload = response.data.result;
-      console.log('Upload successful1:',  response.data);
+      console.log('Upload successful1:',  response);
       console.log('Upload successful:', this.resultFromUpload);
     } catch (error) {
       console.error('Upload failed:', error);

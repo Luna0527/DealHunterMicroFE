@@ -133,7 +133,7 @@ export default {
 
             // 处理响应，例如检查是否成功保存数据
             console.log('Data saved successfully:', response.data);
-            alert("Change success!");
+            alert("Change sucessfully!");
             // 关闭表单
             this.closeForm();
           } catch (error) {

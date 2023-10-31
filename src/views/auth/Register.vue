@@ -116,7 +116,7 @@ data(){
     console.log(response.data);
     alert(response.data.message);
     if(response.data.message=="User registered!"){
-        this.$router.push('/');
+        this.$router.push('/login');
     }
   })
   .catch(error => {
