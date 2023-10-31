@@ -246,7 +246,6 @@ export default {
           this.storeAddress = this.product.storeAddress;
           this.description = this.product.description;
           this.brandName = this.product.brandName;
-          console.log(config);
 
           // 获取价格历史数据
           axios
@@ -272,11 +271,9 @@ export default {
 
             if(localStorage.getItem('userId')!=null){
             //判断关注
-            const url = `http://167.172.71.33:31003/api/product/${localStorage.getItem('proID')}/checkWatchers`;
-      
-           // 使用Vue Resource、Axios或其他HTTP请求库发送请求
-           // 这里使用Axios作为示例
-            axios.get(url,config)
+            // const url = `http://167.172.71.33:31003/api/product/${localStorage.getItem('proID')}/checkWatchers`;
+
+            axios.get(`http://167.172.71.33:31003/api/product/${localStorage.getItem('proID')}/checkWatchers`,config)
           .then(response => {
             
             this.isWatching = response.data;
@@ -324,7 +321,7 @@ export default {
     },
     addToWatch(){
       //const productId = this.$route.params.id;
-      axios.post(`http://167.172.71.33:31003/api/product/${localStorage.getItem('proID')}/addWatchers/`, null,config) 
+      axios.post(`http://167.172.71.33:31003/api/product/${localStorage.getItem('proID')}/addWatchers`,null, config) 
       .then(response => {
     // 请求成功处理
         console.log('Add user follow successfully.', response.data);
@@ -338,7 +335,7 @@ export default {
 
     delToWatch(){
       //const productId = this.$route.params.id;
-      axios.delete(`http://167.172.71.33:31003/api/product/${localStorage.getItem('proID')}/deleteWatchers`,null,config) 
+      axios.delete(`http://167.172.71.33:31003/api/product/${localStorage.getItem('proID')}/deleteWatchers`,config) 
       .then(response => {
     // 请求成功处理
         console.log('Deleting user subscription successfully.', response.data);

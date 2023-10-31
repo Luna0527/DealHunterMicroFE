@@ -63,7 +63,7 @@
 
                 <div class="mb-3">
                   <label for="currentPrice">Current Price</label>
-                  <input type="number" id="currentPrice" v-model="currentPrice" class="form-control" required>
+                  <input type="text" id="currentPrice" v-model="currentPrice" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
@@ -75,7 +75,7 @@
                 <button type="button" class="btn btn-secondary" @click="closeForm">Close</button>
 
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Submit</button>
               </form>
               <!-- Form ends here -->
 
