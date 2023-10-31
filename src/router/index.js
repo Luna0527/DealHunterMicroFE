@@ -20,33 +20,8 @@ const routes = [{
         hideForAuth: true
     }
 },
-{
-    path: '/customer/dashboard',
-    name: 'dashboard',
-    component: () =>
-        import( /* webpackChunkName: "dashboard" */ '../views/dashboard/Index.vue'),
-    meta: {
-        requiresAuth: true
-    }
-},
-{
-    path: '/customer/order',
-    name: 'order',
-    component: () =>
-        import( /* webpackChunkName: "order" */ '../views/order/Index.vue'),
-    meta: {
-        requiresAuth: true
-    }
-},
-{
-    path: '/customer/order/:snap_token',
-    name: 'detail_order',
-    component: () =>
-        import( /* webpackChunkName: "detail_order" */ '../views/order/Show.vue'),
-    meta: {
-        requiresAuth: true
-    }
-},
+
+
 {
     path: '/',
     name: 'home',
@@ -65,12 +40,7 @@ const routes = [{
     component: () =>
         import( /* webpackChunkName: "detail_product" */ '../views/product/Show.vue')
 },
-{
-    path: '/categories',
-    name: 'categories',
-    component: () =>
-        import( /* webpackChunkName: "category" */ '../views/category/Index.vue')
-},
+
 {
     path: '/category/:id',
     name: 'detail_category',

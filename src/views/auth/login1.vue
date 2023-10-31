@@ -98,12 +98,12 @@ data(){
   axios.post('http://167.172.71.33:31003/api/user/login', requestData)
   .then(response => {
     // 处理后端的响应数据
-    console.log(response.data);
-    localStorage.setItem('token', response.data.accessToken);
-    localStorage.setItem('username', response.data.username);
-    localStorage.setItem('email', response.data.email);
-    localStorage.setItem('userId', response.data.userId);
-    localStorage.setItem('isAdmin', response.data.isAdmin);
+    console.log(response.data.result);
+    localStorage.setItem('token', response.data.result.accessToken);
+    localStorage.setItem('username', response.data.result.username);
+    localStorage.setItem('email', response.data.result.email);
+    localStorage.setItem('userId', response.data.result.userId);
+    localStorage.setItem('isAdmin', response.data.result.isAdmin);
     // console.log(localStorage.getItem('token'));
     // console.log(localStorage.getItem('email'));
     console.log(localStorage.getItem('isAdmin'));
