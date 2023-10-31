@@ -231,7 +231,7 @@ export default {
   mounted() {
     if(this.$route.params.id!=null){
       localStorage.setItem('proID', this.$route.params.id);
-      console.log(localStorage.getItem('proID'));
+      console.log("product ID : "+localStorage.getItem('proID'));
     }
 
     //const productId = this.$route.params.id;
@@ -256,7 +256,7 @@ export default {
               console.log(priceHistoryResponse.data);
               console.log('Dates:', this.priceHistory.map(item => item.createDate));
               this.formattedDates =  this.convertToYYYYMMDD(this.priceHistory.map(item => item.createDate))
-              console.log(this.formattedDates)
+              console.log("formattedDate:" + this.formattedDates)
               console.log('Prices:', this.priceHistory.map(item => item.price));
               this.isLoading = false; // 加载完成
               // 在数据加载完成后创建图表
@@ -271,7 +271,7 @@ export default {
 
             if(localStorage.getItem('userId')!=null){
             //判断关注
-            const url = `http://167.172.71.33:31003/api/product/${localStorage.getItem('proID')}/checkWatchers`;
+            const url = `http://167.172.71.33:31003/api/product/${localStorage.getItem('proID')}/checkWatchers/`;
       
            // 使用Vue Resource、Axios或其他HTTP请求库发送请求
            // 这里使用Axios作为示例
@@ -322,7 +322,7 @@ export default {
     },
     addToWatch(){
       //const productId = this.$route.params.id;
-      axios.post(`http://167.172.71.33:31003/api/product/${localStorage.getItem('proID')}/addWatchers`, null,config) 
+      axios.post(`http://167.172.71.33:31003/api/product/${localStorage.getItem('proID')}/addWatchers/`, null,config) 
       .then(response => {
     // 请求成功处理
         console.log('Add user follow successfully.', response.data);
@@ -336,7 +336,7 @@ export default {
 
     delToWatch(){
       //const productId = this.$route.params.id;
-      axios.delete(`http://167.172.71.33:31003/api/product/${localStorage.getItem('proID')}/deleteWatchers`,config) 
+      axios.delete(`http://167.172.71.33:31003/api/product/${localStorage.getItem('proID')}/deleteWatchers/`,config) 
       .then(response => {
     // 请求成功处理
         console.log('Deleting user subscription successfully.', response.data);
@@ -362,14 +362,15 @@ export default {
 
 
     convertToYYYYMMDD(dateStrings) {
-      return dateStrings.map(dateString => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-      });
-    },
+  return dateStrings.map(dateString => {
+    const dateWithoutTimezone = dateString.split('T')[0];
+    const date = new Date(dateWithoutTimezone);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}${month}${day}`;
+  });
+},
 
     createLineChart() {
       const ctx = this.$refs.lineChart.getContext('2d');

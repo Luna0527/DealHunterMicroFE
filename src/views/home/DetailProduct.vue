@@ -250,7 +250,7 @@ export default {
 
       // 存储上传结果
       this.resultFromUpload = response.data.result;
-      console.log('Upload successful1:',  response.data);
+      console.log('Upload successful1:',  response);
       console.log('Upload successful:', this.resultFromUpload);
     } catch (error) {
       console.error('Upload failed:', error);
