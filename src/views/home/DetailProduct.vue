@@ -171,7 +171,7 @@ export default {
         axios
       .get('http://167.172.71.33:31003/api/product/productname', {
         params: {
-          productName:this.$route.params.name// 你的产品名称
+          productname:this.$route.params.name// 你的产品名称
         },
       })
       .then((response) => {
