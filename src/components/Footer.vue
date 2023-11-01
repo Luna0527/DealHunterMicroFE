@@ -19,7 +19,7 @@
             <div class="row text-center mt-3 pb-3">
                 <div class="col-md-12">
                     <hr>
-                    © <strong>Deal Hunter</strong> 2024 • NUS ISS SE Group 8
+                    © <strong>Deal Hunter</strong> 2024 • NUS ISS SE Group 12
                 </div>
             </div>
         </div>
