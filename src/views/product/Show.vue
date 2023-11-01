@@ -129,7 +129,7 @@
               <form @submit.prevent="submitForm" >
                 <div class="mb-6" >
                   <label for="brandname">Brand Name</label>
-                  <input type="text" id="brandname" v-model="brandName" class="form-control" :readonly="true" maxlength="50" required>
+                  <input type="text" id="brandname" v-model="brandName" class="form-control" :readonly="true" maxlength="30" required>
                 </div>
                 <!-- Other form fields -->
                 <div class="mb-6">

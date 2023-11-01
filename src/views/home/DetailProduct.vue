@@ -48,7 +48,7 @@
                 <!-- Other form fields -->
                 <div class="mb-3">
                   <label for="productname">Product Name</label>
-                  <input type="text" id="productname" v-model="productName" class="form-control" maxlength="35" required>
+                  <input type="text" id="productname" v-model="productName" class="form-control" maxlength="27" required>
                 </div>
 
                 <div class="mb-3">
