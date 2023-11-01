@@ -45,22 +45,22 @@
                 <!-- Other form fields -->
                 <div class="mb-3">
                   <label for="productname">Product Name</label>
-                  <input type="text" id="productname" v-model="productName" class="form-control" required>
+                  <input type="text" id="productname" v-model="productName" class="form-control" maxlength="35"  required>
                 </div>
 
                 <div class="mb-3">
                   <label for="storeAddress">Store Address</label>
-                  <input type="text" id="storeAddress" v-model="storeAddress" class="form-control" required>
+                  <input type="text" id="storeAddress" v-model="storeAddress" class="form-control" maxlength="50" required>
                 </div>
 
                 <div class="mb-3">
                   <label for="description">Description</label>
-                  <textarea id="description" v-model="description" class="form-control" required></textarea>
+                  <textarea id="description" v-model="description" class="form-control" maxlength="200"  required></textarea>
                 </div>
 
                 <div class="mb-3">
                   <label for="currentPrice">Current Price</label>
-                  <input type="number" id="currentPrice" v-model="currentPrice" class="form-control" required>
+                  <input type="number" id="currentPrice" v-model="currentPrice" class="form-control" step="0.01" required>
                 </div>
 
                 <div class="mb-3">
